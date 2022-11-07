@@ -5,10 +5,10 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components/dist
 
 import styles from "./BurgerIngridient.module.css";
 
-class Ingridient extends React.Component {
+class BurgerIngridient extends React.Component {
   render() {
     return (
-      <div className={styles.container}>
+      <li className={styles.container}>
         <img src={this.props.data.image}></img>
         <div className={styles.priceContainer}>
           <p className="text text_type_digits-default">
@@ -18,9 +18,9 @@ class Ingridient extends React.Component {
         </div>
         <p>{this.props.data.name}</p>
         <Counter />
-      </div>
+      </li>
     );
   }
 }
 
-export default Ingridient;
+export default BurgerIngridient;

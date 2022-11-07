@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/drag-icon";
@@ -6,6 +7,8 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/button";
 
 import styles from './BurgerConstructor.module.css';
+
+import { dataPropTypes } from "../../utils/data";
 
 class BurgerConstructor extends React.Component {
   render() {
@@ -25,13 +28,12 @@ class BurgerConstructor extends React.Component {
           {this.props.data.map((elem) => {
             if (elem.type !== "bun") {
               return (
-                <li className={styles.listItem}>
+                <li className={styles.listItem} key={elem._id}>
                   <DragIcon />
                   <ConstructorElement
                     text={elem.name}
                     price={elem.price}
                     thumbnail={elem.image}
-                    key={this.props.data._id}
                   />
                 </li>
               );
@@ -60,6 +62,14 @@ class BurgerConstructor extends React.Component {
       </section>
     );
   }
+
 }
 
+BurgerConstructor.propTypes = {
+    elem: dataPropTypes
+}
+
+
+
 export default BurgerConstructor;
+

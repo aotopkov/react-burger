@@ -1,9 +1,11 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
-import Ingridient from "../BurgerIngridient/BurgerIngridient";
+import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
 
 import styles from "./BurgerIngridients.module.css";
+import { dataPropTypes } from "../../utils/data";
 
 class BurgerIngridients extends React.Component {
   state = {};
@@ -30,9 +32,7 @@ class BurgerIngridients extends React.Component {
             {this.props.data.map((elem) => {
               if (elem.type === "bun") {
                 return (
-                  <li>
-                    <Ingridient data={elem} key={elem._id} />
-                  </li>
+                    <BurgerIngridient data={elem} key={elem._id} />
                 );
               }
             })}
@@ -42,9 +42,7 @@ class BurgerIngridients extends React.Component {
             {this.props.data.map((elem) => {
               if (elem.type === "sauce") {
                 return (
-                  <li>
-                    <Ingridient data={elem} key={elem._id}/>
-                  </li>
+                    <BurgerIngridient data={elem} key={elem._id}/>
                 );
               }
             })}
@@ -54,9 +52,7 @@ class BurgerIngridients extends React.Component {
             {this.props.data.map((elem) => {
               if (elem.type === "main") {
                 return (
-                  <li>
-                    <Ingridient data={elem} key={elem._id}/>
-                  </li>
+                    <BurgerIngridient data={elem} key={elem._id}/>
                 );
               }
             })}
@@ -65,6 +61,10 @@ class BurgerIngridients extends React.Component {
       </section>
     );
   }
+}
+
+BurgerIngridients.propsType = {
+    elem: dataPropTypes
 }
 
 export default BurgerIngridients;

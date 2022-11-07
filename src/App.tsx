@@ -5,13 +5,15 @@ import AppHeader from './components/AppHeader/AppHeader';
 import BurgerConstructor from './components/BurgerConstructor/BurgerConstructor';
 import BurgerIngridients from './components/BurgerIngredients/BurgerIngridients';
 import data from './utils/data';
+import PropTypes from 'prop-types';
+
 
 function App() {
   return (
     <div className="App">
       <AppHeader/>
       <main className='main'>
-      <BurgerIngridients data={data}/>
+      <BurgerIngridients data={data} />
       <BurgerConstructor data={data} bun={data.find(elem => elem.type === 'bun')}/>
       </main>
     </div>
