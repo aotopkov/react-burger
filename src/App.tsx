@@ -12,7 +12,7 @@ function App() {
       <AppHeader/>
       <main className='main'>
       <BurgerIngridients data={data}/>
-      <BurgerConstructor data={data}/>
+      <BurgerConstructor data={data} bun={data.find(elem => elem.type === 'bun')}/>
       </main>
     </div>
   );

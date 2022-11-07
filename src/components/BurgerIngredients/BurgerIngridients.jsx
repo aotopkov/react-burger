@@ -31,7 +31,7 @@ class BurgerIngridients extends React.Component {
               if (elem.type === "bun") {
                 return (
                   <li>
-                    <Ingridient data={elem} />
+                    <Ingridient data={elem} key={elem._id} />
                   </li>
                 );
               }
@@ -43,7 +43,7 @@ class BurgerIngridients extends React.Component {
               if (elem.type === "sauce") {
                 return (
                   <li>
-                    <Ingridient data={elem} />
+                    <Ingridient data={elem} key={elem._id}/>
                   </li>
                 );
               }
@@ -55,7 +55,7 @@ class BurgerIngridients extends React.Component {
               if (elem.type === "main") {
                 return (
                   <li>
-                    <Ingridient data={elem} />
+                    <Ingridient data={elem} key={elem._id}/>
                   </li>
                 );
               }
