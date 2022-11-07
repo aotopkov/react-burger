@@ -1,0 +1,30 @@
+.ingridients {
+    max-width: 600px;
+}
+
+.tabList {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.containerScroll {
+    max-height: 700px;
+    overflow: auto;
+}
+
+.containerScroll::-webkit-scrollbar-thumb {
+    border: 3px solid;
+    background-color: #8585AD;
+}
+
+.containerScroll::-webkit-scrollbar-track{
+    background: #2F2F37;
+}
+
+.listIngridients {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
