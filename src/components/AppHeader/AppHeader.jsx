@@ -7,8 +7,7 @@ import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components/
 
 import styles from "./AppHeader.module.css";
 
-class AppHeader extends React.Component {
-  render() {
+function AppHeader() {
     return (
       <header className={styles.AppHeader}>
         <nav className={styles.nav}>
@@ -37,6 +36,5 @@ class AppHeader extends React.Component {
       </header>
     );
   }
-}
 
 export default AppHeader;

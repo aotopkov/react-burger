@@ -7,23 +7,21 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components/dist
 import styles from "./BurgerIngridient.module.css";
 import { dataPropTypes } from "../../utils/data";
 
-class BurgerIngridient extends React.Component {
-  render() {
+function BurgerIngridient(props) {
     return (
       <li className={styles.container}>
-        <img src={this.props.data.image} alt={this.props.data.name}></img>
+        <img src={props.data.image} alt={props.data.name}></img>
         <div className={styles.priceContainer}>
           <p className="text text_type_digits-default">
-            {this.props.data.price}
+            {props.data.price}
           </p>
           <CurrencyIcon />
         </div>
-        <p>{this.props.data.name}</p>
+        <p>{props.data.name}</p>
         <Counter />
       </li>
     );
   }
-}
 
 BurgerIngridient.PropType = {
   data: dataPropTypes

@@ -7,9 +7,7 @@ import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
 import styles from "./BurgerIngridients.module.css";
 import { dataPropTypes } from "../../utils/data";
 
-class BurgerIngridients extends React.Component {
-  state = {};
-  render() {
+function BurgerIngridients(props) {
     return (
       <section className={styles.ingridients}>
         <p className="text text_type_main-large mt-10">Соберите бургер</p>
@@ -29,7 +27,7 @@ class BurgerIngridients extends React.Component {
         <div className={styles.containerScroll}>
           <p className="text text_type_main-medium mt-10">Булки</p>
           <ul className={styles.listIngridients}>
-            {this.props.data.map((elem) => {
+            {props.data.map((elem) => {
               if (elem.type === "bun") {
                 return <BurgerIngridient data={elem} key={elem._id} />;
               }
@@ -37,7 +35,7 @@ class BurgerIngridients extends React.Component {
           </ul>
           <p className="text text_type_main-medium mt-10">Соусы</p>
           <ul className={styles.listIngridients}>
-            {this.props.data.map((elem) => {
+            {props.data.map((elem) => {
               if (elem.type === "sauce") {
                 return <BurgerIngridient data={elem} key={elem._id} />;
               }
@@ -45,7 +43,7 @@ class BurgerIngridients extends React.Component {
           </ul>
           <p className="text text_type_main-medium mt-10">Начинки</p>
           <ul className={styles.listIngridients}>
-            {this.props.data.map((elem) => {
+            {props.data.map((elem) => {
               if (elem.type === "main") {
                 return <BurgerIngridient data={elem} key={elem._id} />;
               }
@@ -55,7 +53,6 @@ class BurgerIngridients extends React.Component {
       </section>
     );
   }
-}
 
 BurgerIngridients.propsType = {
   data: PropTypes.arrayOf(dataPropTypes).isRequired

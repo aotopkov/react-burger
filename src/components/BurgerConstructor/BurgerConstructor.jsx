@@ -10,22 +10,21 @@ import styles from "./BurgerConstructor.module.css";
 
 import { dataPropTypes } from "../../utils/data";
 
-class BurgerConstructor extends React.Component {
-  render() {
+function BurgerConstructor(props) {
     return (
       <section className={styles.burgerConstructor}>
         <div className="ml-8 mb-4 mr-2">
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${this.props.bun.name} (верх)`}
-            price={this.props.bun.price}
-            thumbnail={this.props.bun.image}
-            key={this.props.bun._id}
+            text={`${props.bun.name} (верх)`}
+            price={props.bun.price}
+            thumbnail={props.bun.image}
+            key={props.bun._id}
           />
         </div>
         <ul className={styles.list}>
-          {this.props.data.map((elem) => {
+          {props.data.map((elem) => {
             if (elem.type !== "bun") {
               return (
                 <li className={styles.listItem} key={elem._id}>
@@ -44,9 +43,9 @@ class BurgerConstructor extends React.Component {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${this.props.bun.name} (низ)`}
-            price={this.props.bun.price}
-            thumbnail={this.props.bun.image}
+            text={`${props.bun.name} (низ)`}
+            price={props.bun.price}
+            thumbnail={props.bun.image}
           />
         </div>
 
@@ -62,7 +61,6 @@ class BurgerConstructor extends React.Component {
       </section>
     );
   }
-}
 
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(dataPropTypes),
