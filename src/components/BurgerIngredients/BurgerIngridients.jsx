@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
 import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
@@ -31,9 +31,7 @@ class BurgerIngridients extends React.Component {
           <ul className={styles.listIngridients}>
             {this.props.data.map((elem) => {
               if (elem.type === "bun") {
-                return (
-                    <BurgerIngridient data={elem} key={elem._id} />
-                );
+                return <BurgerIngridient data={elem} key={elem._id} />;
               }
             })}
           </ul>
@@ -41,9 +39,7 @@ class BurgerIngridients extends React.Component {
           <ul className={styles.listIngridients}>
             {this.props.data.map((elem) => {
               if (elem.type === "sauce") {
-                return (
-                    <BurgerIngridient data={elem} key={elem._id}/>
-                );
+                return <BurgerIngridient data={elem} key={elem._id} />;
               }
             })}
           </ul>
@@ -51,9 +47,7 @@ class BurgerIngridients extends React.Component {
           <ul className={styles.listIngridients}>
             {this.props.data.map((elem) => {
               if (elem.type === "main") {
-                return (
-                    <BurgerIngridient data={elem} key={elem._id}/>
-                );
+                return <BurgerIngridient data={elem} key={elem._id} />;
               }
             })}
           </ul>
@@ -64,7 +58,7 @@ class BurgerIngridients extends React.Component {
 }
 
 BurgerIngridients.propsType = {
-    elem: dataPropTypes
-}
+  data: PropTypes.arrayOf(dataPropTypes).isRequired
+};
 
 export default BurgerIngridients;
