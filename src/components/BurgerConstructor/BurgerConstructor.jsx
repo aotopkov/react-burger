@@ -9,8 +9,20 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components/dist/
 import styles from "./BurgerConstructor.module.css";
 
 import { dataPropTypes } from "../../utils/data";
+import Modal from "../Modal/Modal";
+import OrderDetails from "../OrderDetails/OrderDetails";
 
 function BurgerConstructor(props) {
+  const [showModal, setShowModal] = React.useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
     return (
       <section className={styles.burgerConstructor}>
         <div className="ml-8 mb-4 mr-2">
@@ -54,10 +66,14 @@ function BurgerConstructor(props) {
             <p className="text text_type_digits-medium">586</p>
             <CurrencyIcon type="primary"></CurrencyIcon>
           </div>
-          <Button type="primary" size="medium" htmlType="submit">
+          <Button type="primary" size="medium" htmlType="submit" onClick={openModal}>
             Оформить заказ
           </Button>
         </div>
+        <Modal isOpen={showModal}
+        close={closeModal}>
+          <OrderDetails></OrderDetails>
+        </Modal>
       </section>
     );
   }

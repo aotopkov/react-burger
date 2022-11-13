@@ -7,7 +7,9 @@ import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
 import styles from "./BurgerIngridients.module.css";
 import { dataPropTypes } from "../../utils/data";
 
+
 function BurgerIngridients(props) {
+
     return (
       <section className={styles.ingridients}>
         <p className="text text_type_main-large mt-10">Соберите бургер</p>
@@ -29,7 +31,7 @@ function BurgerIngridients(props) {
           <ul className={styles.listIngridients}>
             {props.data.map((elem) => {
               if (elem.type === "bun") {
-                return <BurgerIngridient data={elem} key={elem._id} />;
+                return <BurgerIngridient data={elem} key={elem._id}/>;
               }
             })}
           </ul>
