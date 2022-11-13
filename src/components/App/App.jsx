@@ -33,10 +33,6 @@ function App() {
     getData();
   }, []);
 
-  const visible = React.useRef(false);
-
-  const button = () => {};
-
   return (
     <div className={styles.App}>
       <AppHeader />

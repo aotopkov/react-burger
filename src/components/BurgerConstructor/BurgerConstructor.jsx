@@ -23,64 +23,70 @@ function BurgerConstructor(props) {
     setShowModal(false);
   };
 
-    return (
-      <section className={styles.burgerConstructor}>
-        <div className="ml-8 mb-4 mr-2">
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${props.bun.name} (верх)`}
-            price={props.bun.price}
-            thumbnail={props.bun.image}
-            key={props.bun._id}
-          />
-        </div>
-        <ul className={styles.list}>
-          {props.data.map((elem) => {
-            if (elem.type !== "bun") {
-              return (
-                <li className={styles.listItem} key={elem._id}>
-                  <DragIcon />
-                  <ConstructorElement
-                    text={elem.name}
-                    price={elem.price}
-                    thumbnail={elem.image}
-                  />
-                </li>
-              );
-            }
-          })}
-        </ul>
-        <div className="ml-8 mt-4 mr-2">
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${props.bun.name} (низ)`}
-            price={props.bun.price}
-            thumbnail={props.bun.image}
-          />
-        </div>
+  return (
+    <section className={styles.burgerConstructor}>
+      <div className="ml-8 mb-4 mr-2">
+        <ConstructorElement
+          type="top"
+          isLocked={true}
+          text={`${props.bun.name} (верх)`}
+          price={props.bun.price}
+          thumbnail={props.bun.image}
+          key={props.bun._id}
+        />
+      </div>
+      <ul className={styles.list}>
+        {props.data.map((elem) => {
+          if (elem.type !== "bun") {
+            return (
+              <li className={styles.listItem} key={elem._id}>
+                <DragIcon />
+                <ConstructorElement
+                  text={elem.name}
+                  price={elem.price}
+                  thumbnail={elem.image}
+                />
+              </li>
+            );
+          }
+        })}
+      </ul>
+      <div className="ml-8 mt-4 mr-2">
+        <ConstructorElement
+          type="bottom"
+          isLocked={true}
+          text={`${props.bun.name} (низ)`}
+          price={props.bun.price}
+          thumbnail={props.bun.image}
+        />
+      </div>
 
-        <div className={styles.totalContainer}>
-          <div className={`mr-10 ${styles.totalDigits}`}>
-            <p className="text text_type_digits-medium">586</p>
-            <CurrencyIcon type="primary"></CurrencyIcon>
-          </div>
-          <Button type="primary" size="medium" htmlType="submit" onClick={openModal}>
-            Оформить заказ
-          </Button>
+      <div className={styles.totalContainer}>
+        <div className={`mr-10 ${styles.totalDigits}`}>
+          <p className="text text_type_digits-medium">586</p>
+          <CurrencyIcon type="primary"></CurrencyIcon>
         </div>
-        <Modal isOpen={showModal}
-        close={closeModal}>
+        <Button
+          type="primary"
+          size="medium"
+          htmlType="submit"
+          onClick={openModal}
+        >
+          Оформить заказ
+        </Button>
+      </div>
+      {showModal && (
+        <Modal close={closeModal}>
           <OrderDetails></OrderDetails>
         </Modal>
-      </section>
-    );
-  }
+      )}
+    </section>
+  );
+}
 
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(dataPropTypes).isRequired,
-  bun: dataPropTypes
+  bun: PropTypes.objectOf(dataPropTypes).isRequired,
 };
 
 export default BurgerConstructor;

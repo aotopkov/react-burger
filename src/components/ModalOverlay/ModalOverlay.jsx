@@ -1,14 +1,20 @@
 import styles from "./ModalOverlay.module.css";
 
 function ModalOverlay(props) {
-  const closeModal = () => {
-    props.close();
+  const closeModal = (e) => {
+    if (e.target.id === "modalOverlay") {
+      props.close();
+    }
   };
 
   return (
-    <>
-      <div className={styles.modalOverlay} onClick={closeModal}>{props.children}</div>
-    </>
+    <div
+      className={styles.modalOverlay}
+      onClickCapture={closeModal}
+      id="modalOverlay"
+    >
+      {props.children}
+    </div>
   );
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/counter";
@@ -29,18 +30,17 @@ function BurgerIngridient(props) {
       </div>
       <p>{props.data.name}</p>
       <Counter />
-      <Modal
-        isOpen={showModal}
-        close={closeModal}
-      >
-        <IngredientDetails data={props.data} />
-      </Modal>
+      {showModal && (
+        <Modal close={closeModal}>
+          <IngredientDetails data={props.data} />
+        </Modal>
+      )}
     </li>
   );
 }
 
 BurgerIngridient.PropType = {
-  data: dataPropTypes,
+  data: PropTypes.objectOf(dataPropTypes).isRequired,
 };
 
 export default BurgerIngridient;
