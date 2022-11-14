@@ -86,7 +86,7 @@ function BurgerConstructor(props) {
 
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(dataPropTypes).isRequired,
-  bun: (dataPropTypes).isRequired,
+  bun: dataPropTypes
 };
 
 export default BurgerConstructor;
