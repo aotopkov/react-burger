@@ -1,0 +1,14 @@
+.container {
+    position: relative;
+    width: 272px;
+    height: 208px;
+    
+}
+
+.priceContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 9px
+}

@@ -1,0 +1,30 @@
+.AppHeader {
+    height: 88px;
+    margin: 40px 40px 0;
+    background-color: #1C1C21;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.navList {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 8px
+}
+
+.navItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 9px;
+    width: 178px;
+}
+
+.logo {
+    margin-left: 112px;
+    margin-right: 289px;
+}

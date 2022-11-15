@@ -1,0 +1,11 @@
+.App {
+  text-align: center;
+  position: relative;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 40px
+}

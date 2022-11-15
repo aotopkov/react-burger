@@ -1,0 +1,52 @@
+.burgerConstructor {
+    max-width: 600px;
+    margin-top: 80px;
+}
+
+.list {
+    margin: 0;
+    padding: 0;
+    height: 480px;
+    overflow: auto;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px
+}
+
+.list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.list::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+
+.listItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 8px;
+    gap: 13px
+}
+
+.totalContainer {
+    max-width: 568px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 40px;
+
+}
+
+.totalDigits {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 9px
+}
