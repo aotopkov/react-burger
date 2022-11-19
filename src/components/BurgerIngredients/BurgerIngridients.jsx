@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { DataContext } from "../../utils/DataContext";
+
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
 import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
 
@@ -9,6 +11,8 @@ import { dataPropTypes } from "../../utils/data";
 
 
 function BurgerIngridients(props) {
+
+  const { data } = React.useContext(DataContext)
 
     return (
       <section className={styles.ingridients}>
@@ -29,7 +33,7 @@ function BurgerIngridients(props) {
         <div className={styles.containerScroll}>
           <p className="text text_type_main-medium mt-10">Булки</p>
           <ul className={styles.listIngridients}>
-            {props.data.map((elem) => {
+            {data.map((elem) => {
               if (elem.type === "bun") {
                 return <BurgerIngridient data={elem} key={elem._id}/>;
               }
@@ -37,7 +41,7 @@ function BurgerIngridients(props) {
           </ul>
           <p className="text text_type_main-medium mt-10">Соусы</p>
           <ul className={styles.listIngridients}>
-            {props.data.map((elem) => {
+            {data.map((elem) => {
               if (elem.type === "sauce") {
                 return <BurgerIngridient data={elem} key={elem._id} />;
               }
@@ -45,7 +49,7 @@ function BurgerIngridients(props) {
           </ul>
           <p className="text text_type_main-medium mt-10">Начинки</p>
           <ul className={styles.listIngridients}>
-            {props.data.map((elem) => {
+            {data.map((elem) => {
               if (elem.type === "main") {
                 return <BurgerIngridient data={elem} key={elem._id} />;
               }

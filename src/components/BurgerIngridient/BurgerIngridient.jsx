@@ -11,6 +11,7 @@ import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 
 function BurgerIngridient(props) {
+
   const [showModal, setShowModal] = React.useState(false);
 
   const openModal = () => {
