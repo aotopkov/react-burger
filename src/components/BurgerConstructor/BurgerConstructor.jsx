@@ -8,11 +8,29 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components/dist/
 
 import styles from "./BurgerConstructor.module.css";
 
+import { DataContext } from "../../utils/DataContext";
+import { TotalPriceContext } from "../../utils/TotalPriceContext";
+
 import { dataPropTypes } from "../../utils/data";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 
+function calcTotalPrice(state, action) {
+  switch (action.type) {
+    case "add" :
+      return (state + action.price);
+    case "remove" :
+      return (state - action.price);
+    default: 
+     return state
+  }
+}
+
 function BurgerConstructor(props) {
+
+  const { data } = React.useContext(DataContext);
+  const [totalPrice, changeTotalPrice] = React.useReducer(calcTotalPrice, '0')
+  const bun = data.find((elem) => elem.type === "bun")
   const [showModal, setShowModal] = React.useState(false);
 
   const openModal = () => {
@@ -23,20 +41,25 @@ function BurgerConstructor(props) {
     setShowModal(false);
   };
 
+  const handleChangeTotalPrice = (price) => {
+    changeTotalPrice({type: 'add', payload: price})
+  }
+
   return (
+    <TotalPriceContext.Provider value = {{totalPrice, changeTotalPrice}}>
     <section className={styles.burgerConstructor}>
       <div className="ml-8 mb-4 mr-2">
         <ConstructorElement
           type="top"
           isLocked={true}
-          text={`${props.bun.name} (верх)`}
-          price={props.bun.price}
-          thumbnail={props.bun.image}
-          key={props.bun._id}
+          text={`${bun.name} (верх)`}
+          price={bun.price}
+          thumbnail={bun.image}
+          key={bun._id}
         />
       </div>
       <ul className={styles.list}>
-        {props.data.map((elem) => {
+        {data.map((elem) => {
           if (elem.type !== "bun") {
             return (
               <li className={styles.listItem} key={elem._id}>
@@ -55,15 +78,15 @@ function BurgerConstructor(props) {
         <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={`${props.bun.name} (низ)`}
-          price={props.bun.price}
-          thumbnail={props.bun.image}
+          text={`${bun.name} (низ)`}
+          price={bun.price}
+          thumbnail={bun.image}
         />
       </div>
 
       <div className={styles.totalContainer}>
         <div className={`mr-10 ${styles.totalDigits}`}>
-          <p className="text text_type_digits-medium">586</p>
+          <p className="text text_type_digits-medium">{totalPrice}</p>
           <CurrencyIcon type="primary"></CurrencyIcon>
         </div>
         <Button
@@ -77,10 +100,11 @@ function BurgerConstructor(props) {
       </div>
       {showModal && (
         <Modal close={closeModal}>
-          <OrderDetails></OrderDetails>
+          <OrderDetails data={data}></OrderDetails>
         </Modal>
       )}
     </section>
+    </TotalPriceContext.Provider>
   );
 }
 
