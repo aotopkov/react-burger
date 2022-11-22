@@ -7,7 +7,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/
 import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
 
 import styles from "./BurgerIngridients.module.css";
-import { dataPropTypes } from "../../utils/data";
+import { dataPropTypes } from "../../utils/propTypes";
 
 
 function BurgerIngridients(props) {

@@ -5,7 +5,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/counter";
 
 import styles from "./BurgerIngridient.module.css";
-import { dataPropTypes } from "../../utils/data";
+import { dataPropTypes } from "../../utils/propTypes";
 
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";

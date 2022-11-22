@@ -1,6 +1,12 @@
 import PropTypes from 'prop-types';
 
-
+export const orderDataTypes = PropTypes.shape({
+  name: PropTypes.string,
+  order: PropTypes.objectOf({
+    number: PropTypes.number.isRequired
+  }).isRequired,
+  success: PropTypes.bool.isRequired
+})
 
 export const dataPropTypes = PropTypes.shape({
     _id: PropTypes.string.isRequired,

@@ -11,7 +11,7 @@ function App() {
     loading: false,
   });
 
-  const [data, setData] = React.useState([])
+  const [data, setData] = React.useState([]);
 
   const getData = () => {
     setState({ ...state, error: false, loading: true });
@@ -24,7 +24,7 @@ function App() {
       })
       .then((res) => {
         setState({ ...state, loading: false });
-        setData(res.data)
+        setData(res.data);
       })
       .catch((err) => {
         setState({ ...state, error: true, loading: false });
@@ -43,9 +43,9 @@ function App() {
         {state.loading && "Загрузка..."}
         {state.error && "Ошибка!"}
         {!state.loading && data.length && (
-          <DataContext.Provider value={{data, setData}}>
-            <BurgerIngridients/>
-            <BurgerConstructor/>
+          <DataContext.Provider value={{ data, setData }}>
+            <BurgerIngridients />
+            <BurgerConstructor />
           </DataContext.Provider>
         )}
       </main>
