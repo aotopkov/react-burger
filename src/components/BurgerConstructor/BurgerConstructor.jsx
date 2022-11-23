@@ -10,7 +10,6 @@ import styles from "./BurgerConstructor.module.css";
 import { DataContext } from "../../utils/DataContext";
 import { OrderDataContext } from "../../utils/OrderDataContext";
 
-import { dataPropTypes } from "../../utils/propTypes";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 
@@ -144,10 +143,5 @@ function BurgerConstructor() {
     </OrderDataContext.Provider>
   );
 }
-
-BurgerConstructor.propTypes = {
-  bun: dataPropTypes.isRequired,
-  ingridients: dataPropTypes.isRequired,
-};
 
 export default BurgerConstructor;

@@ -6,18 +6,20 @@ import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components/
 import styles from "./AppHeader.module.css";
 
 function AppHeader() {
+  // отключение eslint из-за ошибок пустых ссылок href в тэгах <a>
+  /* eslint-disable */ 
   return (
     <header className={styles.AppHeader}>
       <nav className={styles.nav}>
         <ul className={styles.navList}>
           <li className={styles.navItem}>
-            <a>
+            <a href="#" className={styles.link}>
               <BurgerIcon />
               <p className="text text_type_main-default">Конструктор</p>
             </a>
           </li>
           <li className={styles.navItem}>
-            <a>
+            <a href="#" className={styles.link} >
               <ListIcon type="secondary" />
               <p className="text text_type_main-default text_color_inactive">
                 Лист заказов
@@ -28,7 +30,7 @@ function AppHeader() {
             <Logo />
           </li>
           <li className={styles.navItem}>
-            <a>
+            <a href="#" className={styles.link}>
               <ProfileIcon type="secondary" />
               <p className="text text_type_main-default text_color_inactive">
                 Личный кабинет
