@@ -49,7 +49,7 @@ function IngredientDetails({ data }) {
 }
 
 IngredientDetails.PropType = {
-  data: PropTypes.objectOf(dataPropTypes).isRequired,
+  data: PropTypes.objectOf(dataPropTypes.isRequired).isRequired,
 };
 
 export default IngredientDetails;

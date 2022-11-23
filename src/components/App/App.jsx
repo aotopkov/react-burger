@@ -3,6 +3,7 @@ import styles from "./App.module.css";
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngridients from "../BurgerIngredients/BurgerIngridients";
+import { burgerApiUrl, getDatafromApi } from "../../utils/Api";
 import { DataContext } from "../../utils/DataContext";
 
 function App() {
@@ -15,13 +16,7 @@ function App() {
 
   const getData = () => {
     setState({ ...state, error: false, loading: true });
-    fetch("https://norma.nomoreparties.space/api/ingredients")
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    getDatafromApi(burgerApiUrl)
       .then((res) => {
         setState({ ...state, loading: false });
         setData(res.data);

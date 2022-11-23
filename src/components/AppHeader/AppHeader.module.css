@@ -22,6 +22,7 @@
     align-items: center;
     gap: 9px;
     width: 178px;
+    cursor: pointer;
 }
 
 .logo {
