@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-import { DataContext } from "../../utils/DataContext";
+import { useSelector } from "react-redux";
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
 import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
@@ -9,9 +8,8 @@ import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
 import styles from "./BurgerIngridients.module.css";
 import { dataPropTypes } from "../../utils/propTypes";
 
-function BurgerIngridients(props) {
-  const { data } = React.useContext(DataContext);
-
+function BurgerIngridients() {
+  const data = useSelector((store) => store.data.data);
   const bun = React.useMemo(
     () => data.filter((elem) => elem.type === "bun"),
     [data]

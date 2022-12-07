@@ -1,47 +1,39 @@
-import React from "react";
+import { useEffect } from "react";
 import styles from "./App.module.css";
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngridients from "../BurgerIngredients/BurgerIngridients";
-import { burgerApiUrl, getDatafromApi } from "../../utils/Api";
-import { DataContext } from "../../utils/DataContext";
+import { useSelector, useDispatch } from "react-redux";
+import { compose, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { getData } from "../../services/actions/actions";
+
+const composeEnhancers =
+  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
+
+export const enhancers = composeEnhancers(applyMiddleware(thunk));
 
 function App() {
-  const [state, setState] = React.useState({
-    error: false,
-    loading: false,
-  });
+  const dispatch = useDispatch();
+  const { data, dataRequest, dataFailed } = useSelector((store) => store.data);
 
-  const [data, setData] = React.useState([]);
-
-  const getData = () => {
-    setState({ ...state, error: false, loading: true });
-    getDatafromApi(burgerApiUrl)
-      .then((res) => {
-        setState({ ...state, loading: false });
-        setData(res.data);
-      })
-      .catch((err) => {
-        setState({ ...state, error: true, loading: false });
-        console.log(err);
-      });
-  };
-
-  React.useEffect(() => {
-    getData();
+  useEffect(() => {
+    dispatch(getData());
   }, []);
 
   return (
     <div className={styles.App}>
       <AppHeader />
       <main className={styles.main}>
-        {state.loading && "Загрузка..."}
-        {state.error && "Ошибка!"}
-        {!state.loading && data.length && (
-          <DataContext.Provider value={{ data, setData }}>
+        {dataRequest && "Загрузка"}
+        {dataFailed && "Ошибка Загрузки"}
+        {!dataRequest && !dataFailed && data.length && (
+          <>
             <BurgerIngridients />
             <BurgerConstructor />
-          </DataContext.Provider>
+          </>
         )}
       </main>
     </div>

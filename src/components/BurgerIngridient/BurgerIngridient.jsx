@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
@@ -9,16 +8,22 @@ import { dataPropTypes } from "../../utils/propTypes";
 
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  CLOSE_MODAL_INGRIDIENT,
+  OPEN_MODAL_INGRIDIENT,
+} from "../../services/actions/actions";
 
 function BurgerIngridient(props) {
-  const [showModal, setShowModal] = React.useState(false);
+  const dispatch = useDispatch();
+  const showModal = useSelector((store) => store.ingridient.openModal);
 
   const openModal = () => {
-    setShowModal(true);
+    dispatch({ type: OPEN_MODAL_INGRIDIENT, payload: props.data });
   };
 
   const closeModal = () => {
-    setShowModal(false);
+    dispatch({ type: CLOSE_MODAL_INGRIDIENT });
   };
 
   return (

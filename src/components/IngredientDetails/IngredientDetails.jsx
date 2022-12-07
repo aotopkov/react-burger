@@ -1,8 +1,11 @@
 import PropTypes from "prop-types";
 import styles from "./IngredientDetails.module.css";
 import { dataPropTypes } from "../../utils/propTypes";
+import { useSelector } from "react-redux";
 
-function IngredientDetails({ data }) {
+function IngredientDetails() {
+  const data = useSelector((store) => store.ingridient.data);
+
   return (
     <>
       <p className="text text_type_main-large ml-10 mt-10">
