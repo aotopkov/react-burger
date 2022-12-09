@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { compose, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { getData } from "../../services/actions/actions";
+import { DndProvider } from "react-dnd/dist/core";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -21,7 +23,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getData());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={styles.App}>
@@ -30,10 +32,10 @@ function App() {
         {dataRequest && "Загрузка"}
         {dataFailed && "Ошибка Загрузки"}
         {!dataRequest && !dataFailed && data.length && (
-          <>
+          <DndProvider backend={HTML5Backend}>
             <BurgerIngridients />
             <BurgerConstructor />
-          </>
+          </DndProvider>
         )}
       </main>
     </div>

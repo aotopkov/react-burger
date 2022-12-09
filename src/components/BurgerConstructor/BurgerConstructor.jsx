@@ -1,7 +1,7 @@
-import React from "react";
+import { useMemo } from "react";
 
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element";
-import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/drag-icon";
+
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/currency-icon";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/button";
 
@@ -11,78 +11,140 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 
 import { useSelector, useDispatch } from "react-redux";
-import { CLOSE_ORDER_MODAL, setOrder } from "../../services/actions/actions";
+import {
+  ADD_BUN_TO_CONSTRUCTOR,
+  ADD_INGRIDIENT_TO_CONSTRUCTOR,
+  CLOSE_ORDER_MODAL,
+  setOrder,
+} from "../../services/actions/actions";
+import { useDrop } from "react-dnd";
+import BurgerConstructorIngridient from "../BurgerConstructorIngridient/BurgerConstructorIngridient";
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
   const data = useSelector((store) => store.data.data);
   const orderData = useSelector((store) => store.order);
 
-  const bun = React.useMemo(
-    () => data.find((elem) => elem.type === "bun"),
-    [data]
-  );
-  const ingridients = React.useMemo(
-    () => data.filter((elem) => elem.type !== "bun"),
-    [data]
-  );
+  const { bun, ingridients } = useSelector((store) => store.constructorBin);
 
-  const totalPrice = React.useMemo(() => {
-    return (
-      bun.price * 2 + ingridients.reduce((acc, elem) => acc + elem.price, 0)
-    );
+  const totalPrice = useMemo(() => {
+    if (bun && ingridients) {
+      return (
+        bun.price * 2 + ingridients.reduce((acc, elem) => acc + elem.price, 0)
+      );
+    } else if (bun) {
+      return bun.price * 2;
+    } else if (ingridients) {
+      return ingridients.reduce((acc, elem) => acc + elem.price, 0);
+    } else {
+      return "0";
+    }
   }, [bun, ingridients]);
 
-  let burgerId = [bun._id];
-  burgerId = burgerId.concat(
-    ingridients.map((elem) => {
-      return elem._id;
-    }),
-    bun._id
-  );
+  const idArr = useMemo(() => {
+    let burgerId = [];
+    if (bun && ingridients) {
+      burgerId = burgerId.concat(bun._id);
+      burgerId = burgerId.concat(
+        ingridients.map((elem) => {
+          return elem._id;
+        })
+      );
+    } else if (ingridients) {
+      burgerId = burgerId.concat(
+        ingridients.map((elem) => {
+          return elem._id;
+        })
+      );
+    } else if (bun) {
+      burgerId = burgerId.concat(bun._id);
+    }
+    return burgerId;
+  }, [bun, ingridients]);
+
+  // Drag&Drop
+
+  const handleDropBun = (item) => {
+    dispatch({
+      type: ADD_BUN_TO_CONSTRUCTOR,
+      payload: data.find((elem) => elem._id === item.id),
+    });
+  };
+
+  const handleDropIngridient = (item) => {
+    dispatch({
+      type: ADD_INGRIDIENT_TO_CONSTRUCTOR,
+      payload: data.find((elem) => elem._id === item.id),
+    });
+  };
+
+  const [, targetRefBun] = useDrop({
+    accept: "bun",
+    drop(item) {
+      handleDropBun(item);
+    },
+  });
+
+  const [, targetRefIngridient] = useDrop({
+    accept: "ingridient",
+    drop(item) {
+      handleDropIngridient(item);
+    },
+  });
+
+  // Модальные окна
 
   const openOrderModal = () => {
-    dispatch(setOrder(burgerId));
+    dispatch(setOrder(idArr));
   };
 
   const closeModal = () => {
     dispatch({ type: CLOSE_ORDER_MODAL });
   };
 
+  // Разметка
+
   return (
-    <section className={styles.burgerConstructor}>
-      <div className="ml-8 mb-4 mr-2">
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text={`${bun.name} (верх)`}
-          price={bun.price}
-          thumbnail={bun.image}
-        />
-      </div>
-      <ul className={styles.list}>
-        {ingridients.map((elem) => {
-          return (
-            <li className={styles.listItem} key={elem._id}>
-              <DragIcon />
-              <ConstructorElement
-                text={elem.name}
-                price={elem.price}
-                thumbnail={elem.image}
+    <section className={styles.burgerConstructor} ref={targetRefBun}>
+      {bun && (
+        <div className="ml-8 mb-4 mr-2">
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image}
+          />
+        </div>
+      )}
+      <ul className={styles.list} ref={targetRefIngridient}>
+        {!ingridients.length && (
+          <p className="text text_type_main-medium">
+            Переместите ингридиенты сюда
+          </p>
+        )}
+        {ingridients &&
+          ingridients.map((elem, index) => {
+            return (
+              <BurgerConstructorIngridient
+                elem={elem}
+                index={index}
+                key={index}
               />
-            </li>
-          );
-        })}
+            );
+          })}
       </ul>
-      <div className="ml-8 mt-4 mr-2">
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={`${bun.name} (низ)`}
-          price={bun.price}
-          thumbnail={bun.image}
-        />
-      </div>
+      {bun && (
+        <div className="ml-8 mt-4 mr-2">
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
+          />
+        </div>
+      )}
 
       <div className={styles.totalContainer}>
         <div className={`mr-10 ${styles.totalDigits}`}>
