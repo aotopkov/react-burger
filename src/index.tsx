@@ -4,10 +4,14 @@ import './utils/normalize.css';
 import './index.css';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
-import { enhancers } from './components/App/App';
+import { composeEnhancers } from './components/App/App';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux';
 import { rootReducer } from './services/reducers/reducers';
+import { applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+
+const enhancers = composeEnhancers(applyMiddleware(thunk));
 
 const store = createStore(rootReducer, enhancers)
 

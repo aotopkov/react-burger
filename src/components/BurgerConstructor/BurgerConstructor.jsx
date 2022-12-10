@@ -19,6 +19,8 @@ import {
 } from "../../services/actions/actions";
 import { useDrop } from "react-dnd";
 import BurgerConstructorIngridient from "../BurgerConstructorIngridient/BurgerConstructorIngridient";
+import ModalOverlay from "../ModalOverlay/ModalOverlay";
+import { v4 as uuidv4 } from "uuid";
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -75,6 +77,7 @@ function BurgerConstructor() {
     dispatch({
       type: ADD_INGRIDIENT_TO_CONSTRUCTOR,
       payload: data.find((elem) => elem._id === item.id),
+      uuid: uuidv4(),
     });
   };
 
@@ -129,7 +132,7 @@ function BurgerConstructor() {
               <BurgerConstructorIngridient
                 elem={elem}
                 index={index}
-                key={index}
+                key={elem.uuid}
               />
             );
           })}
@@ -156,10 +159,16 @@ function BurgerConstructor() {
           size="medium"
           htmlType="submit"
           onClick={openOrderModal}
+          disabled={!bun}
         >
           Оформить заказ
         </Button>
       </div>
+      {orderData.orderRequest && (
+        <ModalOverlay>
+          <p className="text text_type_main-default">Отправляем данные</p>
+        </ModalOverlay>
+      )}
       {orderData.openModal && orderData.success && (
         <Modal close={closeModal}>
           <OrderDetails orderData={orderData}></OrderDetails>

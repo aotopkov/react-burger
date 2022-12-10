@@ -1,5 +1,6 @@
 import { useRef } from "react";
-
+import propTypes from "prop-types";
+import { dataPropTypes } from "../../utils/propTypes";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/drag-icon";
 
@@ -17,8 +18,8 @@ function BurgerConstructorIngridient({ elem, index }) {
 
   // Удаление
 
-  const handleRemoveIngridient = (index) => {
-    dispatch({ type: REMOVE_INGRIDIENT_FROM_CONSTRUCTOR, index: index });
+  const handleRemoveIngridient = (uuid) => {
+    dispatch({ type: REMOVE_INGRIDIENT_FROM_CONSTRUCTOR, uuid: uuid });
   };
 
   // //Сортировка
@@ -58,7 +59,7 @@ function BurgerConstructorIngridient({ elem, index }) {
   const [{ isDragging }, drag] = useDrag({
     type: "ingridientMove",
     item: () => {
-      return { id: elem._id, index };
+      return { id: elem.uuid, index };
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -70,7 +71,7 @@ function BurgerConstructorIngridient({ elem, index }) {
   return (
     <li
       className={styles.listItem}
-      key={index}
+      key={elem.uuid}
       draggable={true}
       ref={sortRef}
       style={{ opacity }}
@@ -82,11 +83,16 @@ function BurgerConstructorIngridient({ elem, index }) {
         price={elem.price}
         thumbnail={elem.image}
         handleClose={() => {
-          handleRemoveIngridient(index);
+          handleRemoveIngridient(elem.uuid);
         }}
       />
     </li>
   );
 }
+
+BurgerConstructorIngridient.propTypes = {
+  elem: propTypes.objectOf(dataPropTypes).isRequired,
+  index: propTypes.string.isRequired,
+};
 
 export default BurgerConstructorIngridient;

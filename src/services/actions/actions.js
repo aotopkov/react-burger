@@ -11,7 +11,7 @@ export const GET_DATA_FAILED = "GET_DATA_FAILED";
 export const SET_ORDER_REQUEST = "SET_ORDER_REQUEST";
 export const SET_ORDER_SUCCESS = "SET_ORDER_SUCESS";
 export const SET_ORDER_FAILED = "SET_ORDER_FAILED";
-export const CLOSE_ORDER_MODAL = "CLOSE__ORDER_MODAL";
+export const CLOSE_ORDER_MODAL = "CLOSE_ORDER_MODAL";
 
 export const OPEN_MODAL_INGRIDIENT = "OPEN_MODAL_INGRIDIENT";
 export const CLOSE_MODAL_INGRIDIENT = "CLOSE_MODAL_INGRIDIENT";
@@ -21,6 +21,7 @@ export const ADD_INGRIDIENT_TO_CONSTRUCTOR = "ADD_INGRIDIENT_TO_CONSTRUCTOR";
 export const REMOVE_INGRIDIENT_FROM_CONSTRUCTOR =
   "REMOVE_INGRIDIENT_FROM_CONSTRUCTOR";
 export const MOVE_INGRIDIENT = "START_MOVE_INGRIDIENT";
+export const CLEAR_BIN_CONSTRUCTOR = "CLEAR_BIN_CONSTRUCTOR";
 
 export function getData() {
   return function (dispatch) {
@@ -58,6 +59,7 @@ export function setOrder(idArr) {
             type: SET_ORDER_SUCCESS,
             res: res,
           });
+          dispatch({ type: CLEAR_BIN_CONSTRUCTOR });
         } else {
           dispatch({
             type: SET_ORDER_FAILED,

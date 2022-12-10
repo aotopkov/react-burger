@@ -15,6 +15,7 @@ import {
   ADD_INGRIDIENT_TO_CONSTRUCTOR,
   REMOVE_INGRIDIENT_FROM_CONSTRUCTOR,
   MOVE_INGRIDIENT,
+  CLEAR_BIN_CONSTRUCTOR,
 } from "../actions/actions";
 
 const initStateData = {
@@ -113,16 +114,18 @@ export const constructorBin = (state = initConstructor, action) => {
     case ADD_INGRIDIENT_TO_CONSTRUCTOR: {
       return {
         ...state,
-        ingridients: [...state.ingridients, action.payload],
+        ingridients: [
+          ...state.ingridients,
+          { ...action.payload, uuid: action.uuid },
+        ],
       };
     }
     case REMOVE_INGRIDIENT_FROM_CONSTRUCTOR: {
       return {
         ...state,
-        ingridients: [
-          ...state.ingridients.slice(0, action.index),
-          ...state.ingridients.slice(action.index + 1),
-        ],
+        ingridients: state.ingridients.filter(
+          (elem) => elem.uuid !== action.uuid
+        ),
       };
     }
     case MOVE_INGRIDIENT: {
@@ -134,6 +137,9 @@ export const constructorBin = (state = initConstructor, action) => {
           ],
         },
       });
+    }
+    case CLEAR_BIN_CONSTRUCTOR: {
+      return initConstructor;
     }
 
     default:

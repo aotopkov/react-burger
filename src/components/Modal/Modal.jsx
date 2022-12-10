@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types'
 import styles from "./Modal.module.css";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -35,6 +36,10 @@ function Modal(props) {
     </ModalOverlay>,
     modals
   );
+}
+
+Modal.PropTypes={
+  close: PropTypes.func,
 }
 
 export default Modal;

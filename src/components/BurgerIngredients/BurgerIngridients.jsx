@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useInView } from "react-intersection-observer";
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
 import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
@@ -8,7 +9,13 @@ import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
 import styles from "./BurgerIngridients.module.css";
 import { dataPropTypes } from "../../utils/propTypes";
 
+import Modal from "../Modal/Modal";
+import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import { CLOSE_MODAL_INGRIDIENT } from "../../services/actions/actions";
+
 function BurgerIngridients() {
+  const dispatch = useDispatch();
+  const showModal = useSelector((store) => store.ingridient.openModal);
   const data = useSelector((store) => store.data.data);
   const bun = React.useMemo(
     () => data.filter((elem) => elem.type === "bun"),
@@ -23,51 +30,12 @@ function BurgerIngridients() {
     [data]
   );
 
-  const containerRef = useRef();
-  const bunsRef = useRef();
-  const sauceRef = useRef();
-  const mainRef = useRef();
+  const { ref: bunsRef, inView: bunsVisible } = useInView();
+  const { ref: sauceRef, inView: sauceVisible, entry } = useInView();
+  const { ref: mainRef, inView: mainVisible } = useInView();
 
-  const [viewTab, setViewTab] = useState({
-    bunsIsView: true,
-    sauceisView: false,
-    mainisView: false,
-  });
-
-  let options = {
-    root: containerRef.current,
-    rootMargin: "0px",
-    threshold: 0.2,
-  };
-
-  window.onload = () => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (entry.target === bunsRef.current) {
-            setViewTab({
-              bunsIsView: true,
-              sauceisView: false,
-            });
-          } else if (entry.target === sauceRef.current) {
-            setViewTab({
-              bunsIsView: false,
-              sauceisView: true,
-              mainisView: false,
-            });
-          } else if (entry.target === mainRef.current) {
-            setViewTab({
-              sauceisView: false,
-              mainisView: true,
-            });
-          }
-        }
-      });
-    }, options);
-
-    observer.observe(bunsRef.current);
-    observer.observe(sauceRef.current);
-    observer.observe(mainRef.current);
+  const closeModal = () => {
+    dispatch({ type: CLOSE_MODAL_INGRIDIENT });
   };
 
   return (
@@ -75,22 +43,22 @@ function BurgerIngridients() {
       <p className="text text_type_main-large mt-10">Соберите бургер</p>
       <ul className={styles.tabList}>
         <li>
-          <Tab value="bun" active={viewTab.bunsIsView}>
+          <Tab value="bun" active={bunsVisible}>
             Булки
           </Tab>
         </li>
         <li>
-          <Tab value="sauce" active={viewTab.sauceisView}>
+          <Tab value="sauce" active={!bunsVisible && sauceVisible}>
             Соусы
           </Tab>
         </li>
         <li>
-          <Tab value="main" active={viewTab.mainisView}>
+          <Tab value="main" active={mainVisible}>
             Начинки
           </Tab>
         </li>
       </ul>
-      <div className={styles.containerScroll} ref={containerRef}>
+      <div className={styles.containerScroll}>
         <p className="text text_type_main-medium mt-10" ref={bunsRef}>
           Булки
         </p>
@@ -107,15 +75,18 @@ function BurgerIngridients() {
             return <BurgerIngridient data={elem} key={elem._id} />;
           })}
         </ul>
-        <p className="text text_type_main-medium mt-10" ref={mainRef}>
-          Начинки
-        </p>
-        <ul className={styles.listIngridients}>
+        <p className="text text_type_main-medium mt-10">Начинки</p>
+        <ul className={styles.listIngridients} ref={mainRef}>
           {main.map((elem) => {
             return <BurgerIngridient data={elem} key={elem._id} />;
           })}
         </ul>
       </div>
+      {showModal && (
+        <Modal close={closeModal}>
+          <IngredientDetails data={data} />
+        </Modal>
+      )}
     </section>
   );
 }

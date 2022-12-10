@@ -20,7 +20,7 @@ function ModalOverlay(props) {
 }
 
 ModalOverlay.propTypes = {
-  close: PropTypes.func.isRequired,
+  close: PropTypes.func,
   children: PropTypes.element.isRequired
 }
 

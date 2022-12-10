@@ -6,18 +6,13 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components/dist
 import styles from "./BurgerIngridient.module.css";
 import { dataPropTypes } from "../../utils/propTypes";
 
-import Modal from "../Modal/Modal";
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  CLOSE_MODAL_INGRIDIENT,
-  OPEN_MODAL_INGRIDIENT,
-} from "../../services/actions/actions";
 import { useDrag } from "react-dnd";
+
+import { OPEN_MODAL_INGRIDIENT } from "../../services/actions/actions";
 
 function BurgerIngridient({ data }) {
   const dispatch = useDispatch();
-  const showModal = useSelector((store) => store.ingridient.openModal);
   const count = useSelector((store) => {
     if (data.type === "bun" && store.constructorBin.bun) {
       return store.constructorBin.bun._id === data._id ? "1" : false;
@@ -29,18 +24,14 @@ function BurgerIngridient({ data }) {
     }
   });
 
-  const openModal = () => {
-    dispatch({ type: OPEN_MODAL_INGRIDIENT, payload: data });
-  };
-
-  const closeModal = () => {
-    dispatch({ type: CLOSE_MODAL_INGRIDIENT });
-  };
-
   const [, dragRef] = useDrag({
     type: data.type === "bun" ? "bun" : "ingridient",
     item: { id: data._id },
   });
+
+  const openModal = () => {
+    dispatch({ type: OPEN_MODAL_INGRIDIENT, payload: data });
+  };
 
   return (
     <li
@@ -56,11 +47,6 @@ function BurgerIngridient({ data }) {
       </div>
       <p>{data.name}</p>
       {count >= 1 && <Counter count={count} />}
-      {showModal && (
-        <Modal close={closeModal}>
-          <IngredientDetails data={data} />
-        </Modal>
-      )}
     </li>
   );
 }
