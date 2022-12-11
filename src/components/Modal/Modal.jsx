@@ -38,7 +38,7 @@ function Modal(props) {
   );
 }
 
-Modal.PropTypes={
+Modal.propTypes={
   close: PropTypes.func,
 }
 

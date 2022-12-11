@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 import { dataPropTypes } from "../../utils/propTypes";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/drag-icon";
@@ -91,8 +91,8 @@ function BurgerConstructorIngridient({ elem, index }) {
 }
 
 BurgerConstructorIngridient.propTypes = {
-  elem: propTypes.objectOf(dataPropTypes).isRequired,
-  index: propTypes.string.isRequired,
+  elem: (dataPropTypes).isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default BurgerConstructorIngridient;
