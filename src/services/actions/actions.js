@@ -1,3 +1,4 @@
+import { func } from "prop-types";
 import {
   getDatafromApi,
   getOrderDatafromApi,
@@ -70,4 +71,19 @@ export function setOrder(idArr) {
         console.log(`ошибка ${err}`);
       });
   };
+}
+
+export function addBunToConstructor(bun) {
+  return {
+    type: ADD_BUN_TO_CONSTRUCTOR,
+    payload: bun
+  }
+}
+
+export function addIngridientToConstructor(ingridient, uuid) {
+  return {
+    type: ADD_INGRIDIENT_TO_CONSTRUCTOR,
+    payload: ingridient,
+    uuid: uuid
+  }
 }

@@ -12,10 +12,10 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
-  ADD_BUN_TO_CONSTRUCTOR,
-  ADD_INGRIDIENT_TO_CONSTRUCTOR,
   CLOSE_ORDER_MODAL,
   setOrder,
+  addBunToConstructor,
+  addIngridientToConstructor,
 } from "../../services/actions/actions";
 import { useDrop } from "react-dnd";
 import BurgerConstructorIngridient from "../BurgerConstructorIngridient/BurgerConstructorIngridient";
@@ -66,32 +66,22 @@ function BurgerConstructor() {
 
   // Drag&Drop
 
-  const handleDropBun = (item) => {
-    dispatch({
-      type: ADD_BUN_TO_CONSTRUCTOR,
-      payload: data.find((elem) => elem._id === item.id),
-    });
-  };
-
-  const handleDropIngridient = (item) => {
-    dispatch({
-      type: ADD_INGRIDIENT_TO_CONSTRUCTOR,
-      payload: data.find((elem) => elem._id === item.id),
-      uuid: uuidv4(),
-    });
-  };
-
   const [, targetRefBun] = useDrop({
     accept: "bun",
     drop(item) {
-      handleDropBun(item);
+      dispatch(addBunToConstructor(data.find((elem) => elem._id === item.id)));
     },
   });
 
   const [, targetRefIngridient] = useDrop({
     accept: "ingridient",
     drop(item) {
-      handleDropIngridient(item);
+      dispatch(
+        addIngridientToConstructor(
+          data.find((elem) => elem._id === item.id),
+          uuidv4()
+        )
+      );
     },
   });
 
