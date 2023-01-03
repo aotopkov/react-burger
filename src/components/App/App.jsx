@@ -1,52 +1,37 @@
-import React from "react";
+import { useEffect } from "react";
 import styles from "./App.module.css";
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngridients from "../BurgerIngredients/BurgerIngridients";
-import { DataContext } from "../../utils/DataContext";
+import { useSelector, useDispatch } from "react-redux";
+import { getData } from "../../services/actions/actions";
+import { DndProvider } from "react-dnd/dist/core";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import ModalOverlay from "../ModalOverlay/ModalOverlay";
 
 function App() {
-  const [state, setState] = React.useState({
-    error: false,
-    loading: false,
-  });
+  const dispatch = useDispatch();
+  const { data, dataRequest, dataFailed } = useSelector((store) => store.data);
 
-  const [data, setData] = React.useState([])
-
-  const getData = () => {
-    setState({ ...state, error: false, loading: true });
-    fetch("https://norma.nomoreparties.space/api/ingredients")
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .then((res) => {
-        setState({ ...state, loading: false });
-        setData(res.data)
-      })
-      .catch((err) => {
-        setState({ ...state, error: true, loading: false });
-        console.log(err);
-      });
-  };
-
-  React.useEffect(() => {
-    getData();
-  }, []);
+  useEffect(() => {
+    dispatch(getData());
+  }, [dispatch]);
 
   return (
     <div className={styles.App}>
       <AppHeader />
       <main className={styles.main}>
-        {state.loading && "Загрузка..."}
-        {state.error && "Ошибка!"}
-        {!state.loading && data.length && (
-          <DataContext.Provider value={{data, setData}}>
-            <BurgerIngridients/>
-            <BurgerConstructor/>
-          </DataContext.Provider>
+        {dataRequest && (
+          <ModalOverlay>
+            <p className="text text_type_main-default">Загружаем данные</p>
+          </ModalOverlay>
+        )}
+        {dataFailed && "Ошибка Загрузки"}
+        {!dataRequest && !dataFailed && data.length && (
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngridients />
+            <BurgerConstructor />
+          </DndProvider>
         )}
       </main>
     </div>

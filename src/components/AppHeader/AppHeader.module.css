@@ -22,9 +22,15 @@
     align-items: center;
     gap: 9px;
     width: 178px;
+    cursor: pointer;
 }
 
 .logo {
     margin-left: 112px;
     margin-right: 289px;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit
 }
