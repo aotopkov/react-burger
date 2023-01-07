@@ -8,6 +8,15 @@ import { getData } from "../../services/actions/actions";
 import { DndProvider } from "react-dnd/dist/core";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {
+  LoginPage,
+  RegistrationPage,
+  ForgotPasswordPage,
+  ResetPasswordPage,
+  ProfilePage,
+  NotFoundPage
+} from './../../pages/index'
 
 function App() {
   const dispatch = useDispatch();
@@ -20,20 +29,32 @@ function App() {
   return (
     <div className={styles.App}>
       <AppHeader />
-      <main className={styles.main}>
-        {dataRequest && (
-          <ModalOverlay>
-            <p className="text text_type_main-default">Загружаем данные</p>
-          </ModalOverlay>
-        )}
-        {dataFailed && "Ошибка Загрузки"}
-        {!dataRequest && !dataFailed && data.length && (
-          <DndProvider backend={HTML5Backend}>
-            <BurgerIngridients />
-            <BurgerConstructor />
-          </DndProvider>
-        )}
-      </main>
+        <Switch>
+          <Route path="/login" component={LoginPage}/>
+          <Route path="/registration" component={RegistrationPage}/>
+          <Route path='/forgot-password' component={ForgotPasswordPage}/>
+          <Route path='/reset-password' component={ResetPasswordPage}/>
+          <Route path='/profile' component={ProfilePage}/>
+          <Route exact path="/">
+            <main className={styles.main}>
+              {dataRequest && (
+                <ModalOverlay>
+                  <p className="text text_type_main-default">
+                    Загружаем данные
+                  </p>
+                </ModalOverlay>
+              )}
+              {dataFailed && "Ошибка Загрузки"}
+              {!dataRequest && !dataFailed && data.length && (
+                <DndProvider backend={HTML5Backend}>
+                  <BurgerIngridients />
+                  <BurgerConstructor />
+                </DndProvider>
+              )}
+            </main>
+          </Route>
+          <Route component={NotFoundPage}/>
+        </Switch>
     </div>
   );
 }
