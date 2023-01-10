@@ -21,11 +21,14 @@ import { useDrop } from "react-dnd";
 import BurgerConstructorIngridient from "../BurgerConstructorIngridient/BurgerConstructorIngridient";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import { v4 as uuidv4 } from "uuid";
+import { useHistory } from "react-router";
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
   const data = useSelector((store) => store.data.data);
   const orderData = useSelector((store) => store.order);
+  const userData = useSelector((store) => store.userData);
+  const history = useHistory();
 
   const { bun, ingridients } = useSelector((store) => store.constructorBin);
 
@@ -88,7 +91,9 @@ function BurgerConstructor() {
   // Модальные окна
 
   const openOrderModal = () => {
-    dispatch(setOrder(idArr));
+    userData.isLoggin
+      ? dispatch(setOrder(idArr))
+      : history.replace({ pathname: "/login" });
   };
 
   const closeModal = () => {

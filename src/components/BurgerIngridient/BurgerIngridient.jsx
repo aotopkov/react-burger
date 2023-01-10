@@ -6,13 +6,10 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components/dist
 import styles from "./BurgerIngridient.module.css";
 import { dataPropTypes } from "../../utils/propTypes";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 
-import { OPEN_MODAL_INGRIDIENT } from "../../services/actions/actions";
-
 function BurgerIngridient({ data }) {
-  const dispatch = useDispatch();
   const count = useSelector((store) => {
     if (data.type === "bun" && store.constructorBin.bun) {
       return store.constructorBin.bun._id === data._id ? "1" : false;
@@ -29,17 +26,8 @@ function BurgerIngridient({ data }) {
     item: { id: data._id },
   });
 
-  const openModal = () => {
-    dispatch({ type: OPEN_MODAL_INGRIDIENT, payload: data });
-  };
-
   return (
-    <li
-      className={styles.container}
-      onClick={openModal}
-      draggable
-      ref={dragRef}
-    >
+    <li className={styles.container} draggable ref={dragRef}>
       <img src={data.image} alt={data.name}></img>
       <div className={styles.priceContainer}>
         <p className="text text_type_digits-default">{data.price}</p>

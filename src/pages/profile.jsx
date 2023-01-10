@@ -1,14 +1,55 @@
 import {
+  Button,
   EmailInput,
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { NavLink, Route, Switch } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { NavLink, Route, Switch, useHistory } from "react-router-dom";
+import Auth from "../utils/Auth";
 import styles from "./profile.module.css";
 
 export default function ProfilePage() {
+  const { changeUserData, logoutUser } = Auth();
   const activeLink = `${styles.activeLink} text text_type_main-medium`;
   const inactiveLink = `${styles.link} text text_type_main-medium text_color_inactive`;
+  const userData = useSelector((store) => store.userData);
+  const history = useHistory();
+  const [user, setUser] = useState({
+    visible: false,
+  });
+
+  useEffect(() => {
+    setUser({ name: userData.user.name, email: userData.user.email });
+  }, [])
+
+
+  async function logout() {
+    await logoutUser();
+    history.replace({ pathname: "/login" });
+  }
+
+  function onChange(e) {
+    setUser({ visible: true, [e.target.name]: e.target.value });
+    console.log(user);
+  }
+
+  const saveChanges = async (e) => {
+    e.preventDefault();
+    await changeUserData(user);
+    setUser({
+      visible: false,
+    });
+  };
+
+  function cancelChanges() {
+    setUser({
+      visible: false,
+      name: userData.user.name,
+      email: userData.user.email,
+    });
+  }
 
   return (
     <div className={styles.container}>
@@ -32,7 +73,10 @@ export default function ProfilePage() {
             </NavLink>
           </li>
           <li className={styles.navItem}>
-            <p className="text text_type_main-medium text_color_inactive">
+            <p
+              onClick={logout}
+              className="text text_type_main-medium text_color_inactive"
+            >
               Выход
             </p>
           </li>
@@ -43,11 +87,40 @@ export default function ProfilePage() {
       </nav>
       <Switch>
         <Route path="/profile" exact>
-          <div className={styles.profileEdit}>
-            <Input placeholder="Имя" icon={"EditIcon"} />
-            <EmailInput placeholder="Логин" icon={"EditIcon"} />
-            <PasswordInput placeholder="Пароль" icon={"EditIcon"} />
-          </div>
+          {userData.isLoggin && (
+            <form onSubmit={saveChanges} className={styles.profileEdit}>
+              <Input
+                onChange={onChange}
+                name={"name"}
+                placeholder="Имя"
+                icon={"EditIcon"}
+                value={user.name}
+              />
+              <EmailInput
+                onChange={onChange}
+                name={"email"}
+                placeholder="Логин"
+                icon={"EditIcon"}
+                value={user.email}
+              />
+              <PasswordInput
+                onChange={onChange}
+                placeholder="Пароль"
+                icon={"EditIcon"}
+                value={user.password}
+              />
+              {user.visible && (
+                <>
+                  <Button htmlType="submit" size="small">
+                    Сохранить
+                  </Button>
+                  <Button onClick={cancelChanges} size="small">
+                    Отменить
+                  </Button>
+                </>
+              )}
+            </form>
+          )}
         </Route>
         <Route path="/profile/orderHistory">
           <p>История заказов</p>

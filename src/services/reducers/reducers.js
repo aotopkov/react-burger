@@ -8,6 +8,9 @@ import {
   SET_ORDER_REQUEST,
   SET_ORDER_SUCCESS,
   SET_ORDER_FAILED,
+  SET_USER_DATA_REQUEST,
+  SET_USER_DATA_SUCCESS,
+  SET_USER_DATA_FAILED,
   CLOSE_ORDER_MODAL,
   OPEN_MODAL_INGRIDIENT,
   CLOSE_MODAL_INGRIDIENT,
@@ -16,12 +19,15 @@ import {
   REMOVE_INGRIDIENT_FROM_CONSTRUCTOR,
   MOVE_INGRIDIENT,
   CLEAR_BIN_CONSTRUCTOR,
+  SET_USER_DATA_LOGOUT,
+  SET_USER_DATA_EMAIL_TOKEN,
 } from "../actions/actions";
 
 const initStateData = {
   data: [],
   dataRequest: false,
   dataFailed: false,
+  success: false,
 };
 
 const initOrderData = {
@@ -45,13 +51,29 @@ const initConstructor = {
   ingridients: [],
 };
 
+const initUserData = {
+  request: false,
+  failed: false,
+  isLoggin: false,
+  emailToken: false,
+  user: {
+    email: "",
+    name: "",
+  },
+};
+
 export const getDataReducer = (state = initStateData, action) => {
   switch (action.type) {
     case GET_DATA_REQUEST: {
       return { ...state, dataRequest: true };
     }
     case GET_DATA_SUCCESS: {
-      return { ...state, data: action.data, dataRequest: false };
+      return {
+        ...state,
+        data: action.res.data,
+        dataRequest: false,
+        success: action.res.success,
+      };
     }
     case GET_DATA_FAILED: {
       return { ...state, dataFailed: true, dataRequest: false };
@@ -147,9 +169,55 @@ export const constructorBin = (state = initConstructor, action) => {
   }
 };
 
+export const userData = (state = initUserData, action) => {
+  switch (action.type) {
+    case SET_USER_DATA_REQUEST: {
+      return { ...state, request: true };
+    }
+    case SET_USER_DATA_SUCCESS: {
+      return {
+        ...state,
+        request: false,
+        failed: false,
+        isLoggin: action.res.success,
+        user: action.res.user,
+      };
+    }
+    case SET_USER_DATA_FAILED: {
+      return {
+        ...state,
+        request: false,
+        failed: true,
+      };
+    }
+    case SET_USER_DATA_EMAIL_TOKEN: {
+      return {
+        ...state,
+        emailToken: true,
+      };
+    }
+
+    case SET_USER_DATA_LOGOUT: {
+      return {
+        ...state,
+        request: false,
+        isLoggin: !action.res.success,
+        user: {
+          name: "",
+          email: "",
+        },
+      };
+    }
+
+    default:
+      return state;
+  }
+};
+
 export const rootReducer = combineReducers({
   data: getDataReducer,
   order: submitOrderData,
   ingridient: ingridientData,
   constructorBin: constructorBin,
+  userData: userData,
 });

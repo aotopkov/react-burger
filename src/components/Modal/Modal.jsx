@@ -1,15 +1,21 @@
 import React from "react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 import styles from "./Modal.module.css";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
+import { useHistory, useLocation } from "react-router";
 
 const modals = document.getElementById("modals");
 
 function Modal(props) {
+  let history = useHistory();
+  let location = useLocation();
+
   const closeModal = () => {
-    props.close();
+    if (location.pathname !== "/") {
+      history.goBack();
+    } else props.close();
   };
 
   function closeFromEsc(evt) {
@@ -38,8 +44,8 @@ function Modal(props) {
   );
 }
 
-Modal.propTypes={
+Modal.propTypes = {
   close: PropTypes.func,
-}
+};
 
 export default Modal;

@@ -13,6 +13,12 @@ export const SET_ORDER_SUCCESS = "SET_ORDER_SUCESS";
 export const SET_ORDER_FAILED = "SET_ORDER_FAILED";
 export const CLOSE_ORDER_MODAL = "CLOSE_ORDER_MODAL";
 
+export const SET_USER_DATA_REQUEST = "SET_USER_DATA_REQUEST";
+export const SET_USER_DATA_SUCCESS = "SET_USER_DATA_SUCCESS";
+export const SET_USER_DATA_FAILED = "SET_USER_DATA_FAILED";
+export const SET_USER_DATA_LOGOUT = "SET_USER_DATA_LOGOUT";
+export const SET_USER_DATA_EMAIL_TOKEN = "SET_USER_DATA_EMAIL_TOKEN";
+
 export const OPEN_MODAL_INGRIDIENT = "OPEN_MODAL_INGRIDIENT";
 export const CLOSE_MODAL_INGRIDIENT = "CLOSE_MODAL_INGRIDIENT";
 
@@ -33,7 +39,7 @@ export function getData() {
         if (res && res.success) {
           dispatch({
             type: GET_DATA_SUCCESS,
-            data: res.data,
+            res: res
           });
         } else {
           dispatch({
@@ -75,14 +81,14 @@ export function setOrder(idArr) {
 export function addBunToConstructor(bun) {
   return {
     type: ADD_BUN_TO_CONSTRUCTOR,
-    payload: bun
-  }
+    payload: bun,
+  };
 }
 
 export function addIngridientToConstructor(ingridient, uuid) {
   return {
     type: ADD_INGRIDIENT_TO_CONSTRUCTOR,
     payload: ingridient,
-    uuid: uuid
-  }
+    uuid: uuid,
+  };
 }

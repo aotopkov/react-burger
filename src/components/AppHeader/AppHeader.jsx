@@ -17,20 +17,23 @@ function AppHeader() {
       <nav className={styles.nav}>
         <ul className={styles.navList}>
           {path == "/" && (
-          <li className={styles.navItem}>
-          <Link to={{ pathname: `/` }} className={styles.link}>
-            <BurgerIcon type="primary" />
-            <p className="text text_type_main-default">Конструктор</p>
-          </Link>
-        </li>
+            <li className={styles.navItem}>
+              <Link to={{ pathname: `/` }} className={styles.link}>
+                <BurgerIcon type="primary" />
+                <p className="text text_type_main-default">Конструктор</p>
+              </Link>
+            </li>
           )}
-          {path !== '/' && (
-          <li className={styles.navItem}>
-            <Link to={{ pathname: `/` }} className={styles.link}>
-              <BurgerIcon type="secondary" />
-              <p className="text text_type_main-default text_color_inactive">Конструктор</p>
-            </Link>
-          </li>)}
+          {path !== "/" && (
+            <li className={styles.navItem}>
+              <Link to={{ pathname: `/` }} className={styles.link}>
+                <BurgerIcon type="secondary" />
+                <p className="text text_type_main-default text_color_inactive">
+                  Конструктор
+                </p>
+              </Link>
+            </li>
+          )}
           <li className={styles.navItem}>
             <a href="#" className={styles.link}>
               <ListIcon type="secondary" />
@@ -42,25 +45,23 @@ function AppHeader() {
           <li className={styles.logo}>
             <Logo />
           </li>
-          {path == '/profile' && (
-          <li className={styles.navItem}>
-            <NavLink to={{ pathname: "/profile" }} className={styles.link}>
-              <ProfileIcon type="primary" />
-              <p className="text text_type_main-default">
-                Личный кабинет
-              </p>
-            </NavLink>
-          </li>
+          {path.includes("profile") && (
+            <li className={styles.navItem}>
+              <NavLink to={{ pathname: "/profile" }} className={styles.link}>
+                <ProfileIcon type="primary" />
+                <p className="text text_type_main-default">Личный кабинет</p>
+              </NavLink>
+            </li>
           )}
-          {path !== '/profile' && (
-          <li className={styles.navItem}>
-            <NavLink to={{ pathname: "/profile" }} className={styles.link}>
-              <ProfileIcon type="secondary" />
-              <p className="text text_type_main-default text_color_inactive">
-                Личный кабинет
-              </p>
-            </NavLink>
-          </li>
+          {!path.includes("profile") && (
+            <li className={styles.navItem}>
+              <NavLink to={{ pathname: "/profile" }} className={styles.link}>
+                <ProfileIcon type="secondary" />
+                <p className="text text_type_main-default text_color_inactive">
+                  Личный кабинет
+                </p>
+              </NavLink>
+            </li>
           )}
         </ul>
       </nav>
