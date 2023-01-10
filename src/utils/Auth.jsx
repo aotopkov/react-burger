@@ -131,6 +131,8 @@ export default function Auth() {
       })
       .catch((err) => {
         console.log(`ошибка ${err}`);
+        deleteCookie("accessToken");
+        deleteCookie("refreshToken");
       });
   };
 
