@@ -4,36 +4,27 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link, Redirect, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import ModalOverlay from "../components/ModalOverlay/ModalOverlay";
-import Auth from "../utils/Auth";
-import { getCookie } from "../utils/cookie";
+import { loginUser } from "../services/actions/auth";
+
 import styles from "./stylesForm.module.css";
 
 export default function LoginPage() {
-  const { loginUser } = Auth();
+  const dispatch = useDispatch();
   const [form, setForm] = useState({ email: "", password: "" });
   const userData = useSelector((store) => store.userData);
-  const location = useLocation();
 
   function changeInput(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  const submitForm = async (e) => {
+  const submitForm = (e) => {
     e.preventDefault();
-    await loginUser(form);
+    dispatch(loginUser(form));
     setForm({ email: "", password: "" });
   };
-
-  if (getCookie("accessToken") !== undefined) {
-    return (
-      <>
-        <Redirect to={location.state ? location.state.from : "/"} />
-      </>
-    );
-  }
 
   return (
     <div className={styles.container}>
@@ -54,7 +45,7 @@ export default function LoginPage() {
         />
         {userData.failed && (
           <p className="text text_type_main-default mb-2">
-            Ошибка авторизации {userData.message}
+            Неверный логин / пароль
           </p>
         )}
         <Button

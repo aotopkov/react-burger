@@ -43,7 +43,7 @@ function AppHeader() {
             </a>
           </li>
           <li className={styles.logo}>
-            <Logo />
+            <Link to='/'><Logo /></Link>
           </li>
           {path.includes("profile") && (
             <li className={styles.navItem}>

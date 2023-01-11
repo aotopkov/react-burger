@@ -16,7 +16,7 @@ import {
   setOrder,
   addBunToConstructor,
   addIngridientToConstructor,
-} from "../../services/actions/actions";
+} from "../../services/actions/order";
 import { useDrop } from "react-dnd";
 import BurgerConstructorIngridient from "../BurgerConstructorIngridient/BurgerConstructorIngridient";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";

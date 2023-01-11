@@ -4,40 +4,35 @@ import {
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { NavLink, Route, Switch, useHistory } from "react-router-dom";
-import Auth from "../utils/Auth";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Route, Switch } from "react-router-dom";
+import { changeUserData, logoutUser } from "../services/actions/auth";
 import styles from "./profile.module.css";
 
 export default function ProfilePage() {
-  const { changeUserData, logoutUser } = Auth();
+  const dispatch = useDispatch();
   const activeLink = `${styles.activeLink} text text_type_main-medium`;
   const inactiveLink = `${styles.link} text text_type_main-medium text_color_inactive`;
   const userData = useSelector((store) => store.userData);
-  const history = useHistory();
   const [user, setUser] = useState({
     visible: false,
+    name: userData.user.name,
+    email: userData.user.email,
+    password: "",
   });
 
-  useEffect(() => {
-    setUser({ name: userData.user.name, email: userData.user.email });
-  }, [])
-
-
-  async function logout() {
-    await logoutUser();
-    history.replace({ pathname: "/login" });
+  function logout() {
+    dispatch(logoutUser());
   }
 
   function onChange(e) {
     setUser({ visible: true, [e.target.name]: e.target.value });
-    console.log(user);
   }
 
-  const saveChanges = async (e) => {
+  const saveChanges = (e) => {
     e.preventDefault();
-    await changeUserData(user);
+    dispatch(changeUserData(user));
     setUser({
       visible: false,
     });

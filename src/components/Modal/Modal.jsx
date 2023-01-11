@@ -4,19 +4,14 @@ import styles from "./Modal.module.css";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
-import { useHistory, useLocation } from "react-router";
 
 const modals = document.getElementById("modals");
 
 function Modal(props) {
-  let history = useHistory();
-  let location = useLocation();
 
   const closeModal = () => {
-    if (location.pathname !== "/") {
-      history.goBack();
-    } else props.close();
-  };
+     props.close();
+  }
 
   function closeFromEsc(evt) {
     if (evt.key === "Escape") {

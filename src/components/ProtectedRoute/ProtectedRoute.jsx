@@ -1,43 +1,62 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Redirect, Route } from "react-router";
-import Auth from "../../utils/Auth";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect, Route, useLocation } from "react-router";
+import { getUser } from "../../services/actions/auth";
+import { getCookie } from "../../utils/cookie";
 
-export default function ProtectedRoute({ component }) {
-  const { ...auth } = Auth();
+export default function ProtectedRoute({ forAuth, component, ...rest }) {
+  const dispatch = useDispatch()
+  const isAuth = getCookie("accessToken");
   const userData = useSelector((store) => store.userData);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoad, setLoading] = useState(false);
+  const location = useLocation()
 
-  const init = async () => {
-    await auth.getUser();
-    setLoading(true);
+  const init = () => {
+    if (isAuth) {
+      dispatch(getUser());
+      setLoading(true);
+    } else {
+      setLoading(true);
+    }
   };
 
   useEffect(() => {
     init();
   }, []);
 
-  return (
-    <>
-      {!isLoading && (
-        <>
-          <p className="text text_type_main-default">Загружаем данные</p>
-        </>
-      )}
+  if (forAuth) {
+    return (
+      <>
+        {!isLoad && (
+          <>
+            <p className="text text_type_main-default">Загружаем данные</p>
+          </>
+        )}
 
-      {isLoading && (
-        <Route
-          render={({ location }) =>
-            userData.isLoggin ? (
-              component
-            ) : (
-              <Redirect
-                to={{ pathname: "/login", state: { from: location } }}
-              />
-            )
-          }
-        />
-      )}
-    </>
-  );
+        {isLoad && (
+          <Route
+            render={({ location }) =>
+              userData.isLoggin ? (
+                component
+              ) : (
+                <Redirect
+                  to={{ pathname: "/login", state: { from: location } }}
+                />
+              )
+            }
+          />
+        )}
+      </>
+    );
+  }
+
+  if (!forAuth && isAuth) {
+    return (
+      <Route {...rest}>
+        <Redirect to={location.state ? location.state.from : '/'} />
+      </Route>
+    );
+  }
+
+  return <Route {...rest}>{component}</Route>;
 }

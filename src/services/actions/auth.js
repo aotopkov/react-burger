@@ -1,10 +1,3 @@
-import { useDispatch } from "react-redux";
-import {
-  SET_USER_DATA_FAILED,
-  SET_USER_DATA_LOGOUT,
-  SET_USER_DATA_REQUEST,
-  SET_USER_DATA_SUCCESS,
-} from "../services/actions/actions";
 import {
   burgerApiUrl,
   changeUserDataApi,
@@ -13,19 +6,23 @@ import {
   refreshTokenApi,
   sendRegistrationUsertoApi,
   setloginUserApi,
-} from "./Api";
-import { deleteCookie, setCookie } from "./cookie";
+} from "./../../utils/Api";
+import { deleteCookie, setCookie } from "./../../utils/cookie";
 
-export default function Auth() {
-  const dispatch = useDispatch();
+export const SET_USER_DATA_REQUEST = "SET_USER_DATA_REQUEST";
+export const SET_USER_DATA_SUCCESS = "SET_USER_DATA_SUCCESS";
+export const SET_USER_DATA_FAILED = "SET_USER_DATA_FAILED";
+export const SET_USER_DATA_LOGOUT = "SET_USER_DATA_LOGOUT";
+export const SET_USER_DATA_EMAIL_TOKEN = "SET_USER_DATA_EMAIL_TOKEN";
 
-  //Регистрация пользователя
+//Регистрация пользователя
 
-  const setRegUser = async (data) => {
+export function setRegUser(data) {
+  return function (dispatch) {
     dispatch({
       type: SET_USER_DATA_REQUEST,
     });
-    await sendRegistrationUsertoApi(burgerApiUrl, data)
+    sendRegistrationUsertoApi(burgerApiUrl, data)
       .then((res) => {
         if (res && res.success) {
           let accessToken = res.accessToken.split("Bearer ")[1];
@@ -50,10 +47,12 @@ export default function Auth() {
         console.log(`ошибка ${err}`);
       });
   };
+}
 
-  //Авторизация пользователя
+//Авторизация пользователя
 
-  const loginUser = async (data) => {
+export function loginUser(data) {
+  return function (dispatch) {
     dispatch({
       type: SET_USER_DATA_REQUEST,
     });
@@ -85,11 +84,13 @@ export default function Auth() {
         });
       });
   };
+}
 
-  //Получение данных пользователя по токену
+//Получение данных пользователя по токену
 
-  const getUser = async () => {
-    await getUserApi(burgerApiUrl)
+export function getUser() {
+  return function (dispatch) {
+    getUserApi(burgerApiUrl)
       .then((res) => {
         if (res && res.success) {
           dispatch({
@@ -104,14 +105,16 @@ export default function Auth() {
       })
       .catch((err) => {
         console.log(`ошибка ${err}`);
-        refreshToken();
+        dispatch(refreshToken());
       });
   };
+}
 
-  //обновление Токена
+//обновление Токена
 
-  const refreshToken = async () => {
-    await refreshTokenApi(burgerApiUrl)
+export function refreshToken() {
+  return function (dispatch) {
+    refreshTokenApi(burgerApiUrl)
       .then((res) => {
         if (res && res.success) {
           let accessToken = res.accessToken.split("Bearer ")[1];
@@ -122,7 +125,7 @@ export default function Auth() {
           if (refreshToken) {
             setCookie("refreshToken", refreshToken);
           }
-          getUser();
+          dispatch(getUser());
         } else {
           dispatch({
             type: SET_USER_DATA_FAILED,
@@ -135,14 +138,16 @@ export default function Auth() {
         deleteCookie("refreshToken");
       });
   };
+}
 
-  //Смена данных в профиле
+//Смена данных в профиле
 
-  const changeUserData = async (data) => {
+export function changeUserData(data) {
+  return function (dispatch) {
     dispatch({
       type: SET_USER_DATA_REQUEST,
     });
-    await changeUserDataApi(burgerApiUrl, data)
+    changeUserDataApi(burgerApiUrl, data)
       .then((res) => {
         if (res && res.success) {
           dispatch({
@@ -157,24 +162,28 @@ export default function Auth() {
       })
       .catch(async (err) => {
         console.log(`ошибка ${err}. Обновляем Токен`);
-        await refreshToken().then((res) => {
-          if (res && res.success) {
-            changeUserData(data);
-          }
-        });
+        dispatch(
+          refreshToken().then((res) => {
+            if (res && res.success) {
+              changeUserData(data);
+            }
+          })
+        );
       })
-      .finally(async () => {
-        await getUser();
+      .finally(() => {
+        dispatch(getUser());
       });
   };
+}
 
-  //Выход
+//Выход
 
-  const logoutUser = async () => {
+export function logoutUser() {
+  return function (dispatch) {
     dispatch({
       type: SET_USER_DATA_REQUEST,
     });
-    await logoutUserApi(burgerApiUrl)
+    logoutUserApi(burgerApiUrl)
       .then((res) => {
         if (res && res.success) {
           deleteCookie("accessToken");
@@ -188,13 +197,5 @@ export default function Auth() {
       .catch((err) => {
         console.log(`ошибка ${err}`);
       });
-  };
-
-  return {
-    getUser,
-    setRegUser,
-    loginUser,
-    changeUserData,
-    logoutUser,
   };
 }

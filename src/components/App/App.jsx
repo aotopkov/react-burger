@@ -4,11 +4,10 @@ import AppHeader from "../AppHeader/AppHeader";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngridients from "../BurgerIngredients/BurgerIngridients";
 import { useSelector, useDispatch } from "react-redux";
-import { getData } from "../../services/actions/actions";
 import { DndProvider } from "react-dnd/dist/core";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import {
   LoginPage,
   RegistrationPage,
@@ -20,38 +19,64 @@ import {
 } from "./../../pages/index";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import Modal from "../Modal/Modal";
-import Auth from "../../utils/Auth";
+import { getCookie } from "../../utils/cookie";
+import { getData } from "../../services/actions/ingridients";
+import { getUser } from "../../services/actions/auth";
 
 function App() {
-  let location = useLocation();
-  let background = location.state && location.state.background;
-  const { getUser } = Auth();
+  const isAuth = getCookie("accessToken");
+  const location = useLocation();
+  const background = location.state && location.state.background;
   const dispatch = useDispatch();
   const { data, dataRequest, dataFailed, success } = useSelector(
     (store) => store.data
   );
-
-  const init = async () => {
-    await getUser();
-    dispatch(getData());
-  };
+  const history = useHistory();
 
   useEffect(() => {
-    init();
-  }, []);
+    dispatch(getData());
+    if (isAuth) {
+      dispatch(getUser());
+    }
+  }, [dispatch]);
+
+  
+  function closeModal() {
+    history.goBack();
+  }
 
   return (
     <div className={styles.App}>
       <AppHeader />
       <Switch location={background || location}>
-        <Route path="/login" component={LoginPage} />
-        <Route path="/registration" component={RegistrationPage} />
-        <Route path="/forgot-password" component={ForgotPasswordPage} />
-        <Route path="/reset-password" component={ResetPasswordPage} />
+        <ProtectedRoute
+          forAuth={false}
+          path="/login"
+          component={<LoginPage />}
+        />
+        <ProtectedRoute
+          forAuth={false}
+          path="/registration"
+          component={<RegistrationPage />}
+        />
+        <ProtectedRoute
+          forAuth={false}
+          path="/forgot-password"
+          component={<ForgotPasswordPage />}
+        />
+        <ProtectedRoute
+          forAuth={false}
+          path="/reset-password"
+          component={<ResetPasswordPage />}
+        />
         {success && <Route path="/ingridient/:id" component={IngridientPage} />}
-        <Route path="/profile">
-          <ProtectedRoute component={<ProfilePage />} />
-        </Route>
+
+        <ProtectedRoute
+          forAuth={true}
+          path="/profile"
+          component={<ProfilePage />}
+        />
+
         <Route exact path="/">
           <main className={styles.main}>
             {dataRequest && (
@@ -72,7 +97,7 @@ function App() {
       </Switch>
       {background && (
         <Route path="/ingridient/:id">
-          <Modal>
+          <Modal close={closeModal}>
             <IngridientPage />
           </Modal>
         </Route>

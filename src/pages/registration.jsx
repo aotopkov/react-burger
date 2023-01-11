@@ -5,15 +5,15 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import ModalOverlay from "../components/ModalOverlay/ModalOverlay";
-import Auth from "../utils/Auth";
-import { getCookie } from "../utils/cookie";
+import { setRegUser } from "../services/actions/auth";
+
 import styles from "./stylesForm.module.css";
 
 export default function RegistrationPage() {
-  const { setRegUser } = Auth();
+  const dispatch = useDispatch();
   const [form, setForm] = useState({});
   const userData = useSelector((store) => store.userData);
 
@@ -21,19 +21,11 @@ export default function RegistrationPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  const submitForm = async (e) => {
+  const submitForm = (e) => {
     e.preventDefault();
-    await setRegUser(form);
+    dispatch(setRegUser(form));
     setForm({ name: "", email: "", password: "" });
   };
-
-  if (getCookie("accessToken") !== undefined) {
-    return (
-      <>
-        <Redirect to={"/"} />
-      </>
-    );
-  }
 
   return (
     <div className={styles.container}>

@@ -4,11 +4,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import { SET_USER_DATA_EMAIL_TOKEN } from "../services/actions/actions";
+import { Link, useHistory } from "react-router-dom";
+import { SET_USER_DATA_EMAIL_TOKEN } from "../services/actions/auth";
 import { burgerApiUrl, passwordForgotApi } from "../utils/Api";
 
-import { getCookie } from "../utils/cookie";
+
 import styles from "./stylesForm.module.css";
 
 export default function ForgotPasswordPage() {
@@ -36,14 +36,6 @@ export default function ForgotPasswordPage() {
         console.log(`ошибка ${err}`);
       });
   };
-
-  if (getCookie("accessToken") !== undefined) {
-    return (
-      <>
-        <Redirect to={"/"} />
-      </>
-    );
-  }
 
   return (
     <form onSubmit={SubmitForm} className={styles.container}>

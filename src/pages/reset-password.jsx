@@ -7,7 +7,6 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { burgerApiUrl, passwordResetApi } from "../utils/Api";
-import { getCookie } from "../utils/cookie";
 import styles from "./stylesForm.module.css";
 
 export default function ResetPasswordPage() {
@@ -32,14 +31,6 @@ export default function ResetPasswordPage() {
         console.log(`ошибка ${err}`);
       });
   };
-
-  if (getCookie("accessToken") !== undefined) {
-    return (
-      <>
-        <Redirect to="/" />
-      </>
-    );
-  }
 
   if (!userData.emailToken) {
     return (
