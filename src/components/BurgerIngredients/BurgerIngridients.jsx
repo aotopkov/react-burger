@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useInView } from "react-intersection-observer";
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
@@ -8,14 +8,10 @@ import BurgerIngridient from "../BurgerIngridient/BurgerIngridient";
 
 import styles from "./BurgerIngridients.module.css";
 import { dataPropTypes } from "../../utils/propTypes";
-
-import Modal from "../Modal/Modal";
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import { CLOSE_MODAL_INGRIDIENT } from "../../services/actions/actions";
+import { Link, useLocation } from "react-router-dom";
 
 function BurgerIngridients() {
-  const dispatch = useDispatch();
-  const showModal = useSelector((store) => store.ingridient.openModal);
+  let location = useLocation();
   const data = useSelector((store) => store.data.data);
   const bun = React.useMemo(
     () => data.filter((elem) => elem.type === "bun"),
@@ -31,12 +27,8 @@ function BurgerIngridients() {
   );
 
   const { ref: bunsRef, inView: bunsVisible } = useInView();
-  const { ref: sauceRef, inView: sauceVisible, entry } = useInView();
+  const { ref: sauceRef, inView: sauceVisible } = useInView();
   const { ref: mainRef, inView: mainVisible } = useInView();
-
-  const closeModal = () => {
-    dispatch({ type: CLOSE_MODAL_INGRIDIENT });
-  };
 
   return (
     <section className={styles.ingridients}>
@@ -64,7 +56,18 @@ function BurgerIngridients() {
         </p>
         <ul className={styles.listIngridients}>
           {bun.map((elem) => {
-            return <BurgerIngridient data={elem} key={elem._id} />;
+            return (
+              <Link
+                key={elem._id}
+                className={styles.link}
+                to={{
+                  pathname: `/ingridient/${elem._id}`,
+                  state: { background: location },
+                }}
+              >
+                <BurgerIngridient data={elem} />
+              </Link>
+            );
           })}
         </ul>
         <p className="text text_type_main-medium mt-10" ref={sauceRef}>
@@ -72,21 +75,38 @@ function BurgerIngridients() {
         </p>
         <ul className={styles.listIngridients}>
           {sauce.map((elem) => {
-            return <BurgerIngridient data={elem} key={elem._id} />;
+            return (
+              <Link
+                key={elem._id}
+                className={styles.link}
+                to={{
+                  pathname: `/ingridient/${elem._id}`,
+                  state: { background: location },
+                }}
+              >
+                <BurgerIngridient data={elem} />
+              </Link>
+            );
           })}
         </ul>
         <p className="text text_type_main-medium mt-10">Начинки</p>
         <ul className={styles.listIngridients} ref={mainRef}>
           {main.map((elem) => {
-            return <BurgerIngridient data={elem} key={elem._id} />;
+            return (
+              <Link
+                key={elem._id}
+                className={styles.link}
+                to={{
+                  pathname: `/ingridient/${elem._id}`,
+                  state: { background: location },
+                }}
+              >
+                <BurgerIngridient data={elem} />
+              </Link>
+            );
           })}
         </ul>
       </div>
-      {showModal && (
-        <Modal close={closeModal}>
-          <IngredientDetails data={data} />
-        </Modal>
-      )}
     </section>
   );
 }

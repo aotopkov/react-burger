@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import {
   REMOVE_INGRIDIENT_FROM_CONSTRUCTOR,
   MOVE_INGRIDIENT,
-} from "../../services/actions/actions";
+} from "../../services/actions/order";
 import { useDrop, useDrag } from "react-dnd";
 
 function BurgerConstructorIngridient({ elem, index }) {

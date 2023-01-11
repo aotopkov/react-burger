@@ -32,3 +32,8 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}

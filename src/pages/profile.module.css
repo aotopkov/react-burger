@@ -1,0 +1,47 @@
+.container {
+    margin: 120px auto auto auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 60px
+
+}
+
+.navBar {
+    width: 320px;
+    text-align: start;
+}
+
+.navList {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 80px;
+}
+
+.navItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 64px;
+    cursor: pointer;
+}
+
+.link {
+    text-decoration: none;
+    
+}
+
+.activeLink {
+    text-decoration: none;
+    color: #F2F2F3
+}
+
+.profileEdit {
+    display: flex;
+    flex-direction: column;
+    gap: 24px
+}
