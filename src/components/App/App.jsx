@@ -32,15 +32,15 @@ function App() {
     (store) => store.data
   );
   const history = useHistory();
+  const userData = useSelector((store) => store.userData);
 
   useEffect(() => {
     dispatch(getData());
-    if (isAuth) {
+    if (isAuth && !userData.isLoggin) {
       dispatch(getUser());
     }
-  }, [dispatch]);
+  }, []);
 
-  
   function closeModal() {
     history.goBack();
   }

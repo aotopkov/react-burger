@@ -4,7 +4,7 @@ import {
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Route, Switch } from "react-router-dom";
 import { changeUserData, logoutUser } from "../services/actions/auth";
@@ -17,10 +17,14 @@ export default function ProfilePage() {
   const userData = useSelector((store) => store.userData);
   const [user, setUser] = useState({
     visible: false,
-    name: userData.user.name,
-    email: userData.user.email,
+    name: "",
+    email: "",
     password: "",
   });
+
+  useEffect(() => {
+    setUser({ ...user, name: userData.user.name, email: userData.user.email });
+  }, [userData]);
 
   function logout() {
     dispatch(logoutUser());
