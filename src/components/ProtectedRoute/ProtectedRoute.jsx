@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Redirect, Route, useLocation } from "react-router";
 import { getCookie } from "../../utils/cookie";
@@ -6,16 +5,9 @@ import { getCookie } from "../../utils/cookie";
 export default function ProtectedRoute({ forAuth, component, ...rest }) {
   const isAuth = getCookie("accessToken");
   const userData = useSelector((store) => store.userData);
-  const [isLoad, setLoading] = useState(false);
   const location = useLocation();
 
-  useEffect(() => {
-    if(userData.request) {
-      setLoading(true)
-    }
-  }, [userData])
-
-  if (forAuth && isLoad) {
+  if (forAuth) {
     return (
       <>
         {userData.request && (
@@ -27,7 +19,7 @@ export default function ProtectedRoute({ forAuth, component, ...rest }) {
         {!userData.request && !userData.failed && (
           <Route
             render={({ location }) =>
-              userData.isLoggin ? (
+              isAuth ? (
                 component
               ) : (
                 <Redirect
@@ -49,5 +41,7 @@ export default function ProtectedRoute({ forAuth, component, ...rest }) {
     );
   }
 
-  return <Route {...rest}>{component}</Route>;
+  if (!forAuth && !isAuth) {
+    return <Route {...rest}>{component}</Route>;
+  }
 }

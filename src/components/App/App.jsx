@@ -39,7 +39,7 @@ function App() {
     if (isAuth && !userData.isLoggin) {
       dispatch(getUser());
     }
-  }, []);
+  }, [dispatch]);
 
   function closeModal() {
     history.goBack();
