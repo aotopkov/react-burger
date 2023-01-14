@@ -1,0 +1,157 @@
+.container_small {
+  max-width: 584px;
+  padding: 24px;
+  border-radius: 40px;
+  background-color: #1c1c21;
+  text-align: start;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ingredients {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.image__list_small {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+
+  list-style: none;
+  padding: 0;
+}
+
+.image__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  background: linear-gradient(#801ab2, #4c4cff);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  padding: 3px;
+  z-index: 6;
+}
+
+.image_small {
+  background: #1c1c21;
+  width: 100%;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.image__container:nth-child(2) {
+  z-index: 5;
+  margin-left: -20px;
+}
+
+.image__container:nth-child(3) {
+  z-index: 4;
+  margin-left: -20px;
+}
+
+.image__container:nth-child(4) {
+  z-index: 3;
+  margin-left: -20px;
+}
+
+.image__container:nth-child(5) {
+  z-index: 2;
+  margin-left: -20px;
+}
+
+.image__container:nth-child(6) {
+position: relative;
+  z-index: 1;
+  margin-left: -20px;
+}
+
+.count {
+  position: absolute;
+  background: rgb(11%, 11%, 13%, 0.6);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.price {
+  display: flex;
+  flex-direction: row;
+  gap: 9px;
+  align-items: baseline;
+}
+
+.status_done {
+  color: #00cccc;
+}
+
+
+.containerFull {
+    max-width: 640px;
+}
+
+.containerModal {
+    max-width: 720px;
+    padding: 40px;
+}
+
+.numberFull {
+    text-align: center;
+}
+
+.ingredient__list {
+    max-height: 312px;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: auto;
+    padding-right: 24px;
+}
+
+.ingredient__list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ingredient__list::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.ingredient__list::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+
+.ingredient__container_full {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px
+}
+
+.ingredient__container_full_cost {
+    margin-left: auto;
+}
+
+.order__footer {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    gap: 9px;
+    justify-content: space-between;
+    align-items: center;
+}

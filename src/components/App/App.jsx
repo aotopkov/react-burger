@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import styles from "./App.module.css";
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
@@ -16,6 +16,8 @@ import {
   ProfilePage,
   NotFoundPage,
   IngridientPage,
+  OrderFeedPage,
+  OrderInfoPage,
 } from "./../../pages/index";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import Modal from "../Modal/Modal";
@@ -32,14 +34,17 @@ function App() {
     (store) => store.data
   );
   const history = useHistory();
-  const userData = useSelector((store) => store.userData);
+  const ordersData = useSelector((store) => store.orderInfo);
 
   useEffect(() => {
     dispatch(getData());
-    if (isAuth && !userData.isLoggin) {
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isAuth) {
       dispatch(getUser());
     }
-  }, [dispatch]);
+  }, [dispatch, isAuth]);
 
   function closeModal() {
     history.goBack();
@@ -49,33 +54,38 @@ function App() {
     <div className={styles.App}>
       <AppHeader />
       <Switch location={background || location}>
-        <ProtectedRoute
-          forAuth={false}
-          path="/login"
-          component={<LoginPage />}
-        />
-        <ProtectedRoute
-          forAuth={false}
-          path="/registration"
-          component={<RegistrationPage />}
-        />
-        <ProtectedRoute
-          forAuth={false}
-          path="/forgot-password"
-          component={<ForgotPasswordPage />}
-        />
-        <ProtectedRoute
-          forAuth={false}
-          path="/reset-password"
-          component={<ResetPasswordPage />}
-        />
-        {success && <Route path="/ingridient/:id" component={IngridientPage} />}
+        <Route path="/login">
+          <ProtectedRoute forAuth={false} component={<LoginPage />} />
+        </Route>
+        <Route path="/registration">
+          <ProtectedRoute forAuth={false} component={<RegistrationPage />} />
+        </Route>
+        <Route path="/forgot-password">
+          <ProtectedRoute forAuth={false} component={<ForgotPasswordPage />} />
+        </Route>
+        <Route path="/reset-password">
+          <ProtectedRoute forAuth={false} component={<ResetPasswordPage />} />
+        </Route>
 
-        <ProtectedRoute
-          forAuth={true}
-          path="/profile"
-          component={<ProfilePage />}
-        />
+        <Route exact path="/feed" component={OrderFeedPage} />
+        {success && (
+          <Route path="/ingridient/:id">
+            <IngridientPage />
+          </Route>
+        )}
+
+        <Route path="/feed/:id">
+          <OrderInfoPage type="full" />
+        </Route>
+        <Route path="/profile/orders/:id">
+          <ProtectedRoute
+            forAuth={true}
+            component={<OrderInfoPage type="full" forAuth={true} />}
+          />
+        </Route>
+        <Route path="/profile">
+          <ProtectedRoute forAuth={true} component={<ProfilePage />} />
+        </Route>
 
         <Route exact path="/">
           <main className={styles.main}>
@@ -99,6 +109,20 @@ function App() {
         <Route path="/ingridient/:id">
           <Modal close={closeModal}>
             <IngridientPage />
+          </Modal>
+        </Route>
+      )}
+      {background && ordersData.get && (
+        <Route path="/feed/:id">
+          <Modal close={closeModal}>
+            <OrderInfoPage type="modal" />
+          </Modal>
+        </Route>
+      )}
+      {background && ordersData.get && (
+        <Route path="/profile/orders/:id">
+          <Modal close={closeModal}>
+            <OrderInfoPage type="modal" forAuth={true} />
           </Modal>
         </Route>
       )}

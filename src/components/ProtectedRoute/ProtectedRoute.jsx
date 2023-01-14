@@ -19,7 +19,7 @@ export default function ProtectedRoute({ forAuth, component, ...rest }) {
         {!userData.request && !userData.failed && (
           <Route
             render={({ location }) =>
-              isAuth ? (
+              userData.isLoggin ? (
                 component
               ) : (
                 <Redirect

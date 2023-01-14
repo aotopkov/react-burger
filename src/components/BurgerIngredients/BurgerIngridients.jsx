@@ -11,7 +11,7 @@ import { dataPropTypes } from "../../utils/propTypes";
 import { Link, useLocation } from "react-router-dom";
 
 function BurgerIngridients() {
-  let location = useLocation();
+  const location = useLocation();
   const data = useSelector((store) => store.data.data);
   const bun = React.useMemo(
     () => data.filter((elem) => elem.type === "bun"),

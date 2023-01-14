@@ -34,16 +34,26 @@ function AppHeader() {
               </Link>
             </li>
           )}
-          <li className={styles.navItem}>
-            <a href="#" className={styles.link}>
+          {path.includes('feed') && (<li className={styles.navItem}>
+            <NavLink to={{ pathname: "/feed" }} className={styles.link}>
+              <ListIcon type="primary" />
+              <p className="text text_type_main-default">
+                Лист заказов
+              </p>
+            </NavLink>
+          </li>)}
+          {!path.includes('feed') &&(<li className={styles.navItem}>
+            <NavLink to={{ pathname: "/feed" }} className={styles.link}>
               <ListIcon type="secondary" />
               <p className="text text_type_main-default text_color_inactive">
                 Лист заказов
               </p>
-            </a>
-          </li>
+            </NavLink>
+          </li>)}
           <li className={styles.logo}>
-            <Link to='/'><Logo /></Link>
+            <Link to="/">
+              <Logo />
+            </Link>
           </li>
           {path.includes("profile") && (
             <li className={styles.navItem}>

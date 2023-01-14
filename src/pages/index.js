@@ -5,6 +5,8 @@ import ResetPasswordPage from "./reset-password"
 import ProfilePage from "./profile"
 import NotFoundPage from "./notFound"
 import IngridientPage from "./ingridient"
+import OrderFeedPage from "./orderFeed"
+import OrderInfoPage from "./orderInfo"
 
 export {
     LoginPage,
@@ -13,5 +15,7 @@ export {
     ResetPasswordPage,
     ProfilePage,
     NotFoundPage,
-    IngridientPage
+    IngridientPage,
+    OrderFeedPage,
+    OrderInfoPage
 }
