@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import OrdersList from "../components/OrdersList/OrdersList";
-import { WS_CONNECTION_START } from "../services/actions/socket";
+import OrdersList from "../../components/OrdersList/OrdersList";
+import { WS_CONNECTION_START } from "../../services/actions/socket";
 import styles from "./orderFeed.module.css";
 import { v4 as uuidv4 } from "uuid";
 

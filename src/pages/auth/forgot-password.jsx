@@ -5,8 +5,8 @@ import {
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { SET_USER_DATA_EMAIL_TOKEN } from "../services/actions/auth";
-import { burgerApiUrl, passwordForgotApi } from "../utils/Api";
+import { SET_USER_DATA_EMAIL_TOKEN } from "../../services/actions/auth";
+import { burgerApiUrl, passwordForgotApi } from "../../utils/Api";
 
 
 import styles from "./stylesForm.module.css";

@@ -7,8 +7,8 @@ import {
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import ModalOverlay from "../components/ModalOverlay/ModalOverlay";
-import { setRegUser } from "../services/actions/auth";
+import ModalOverlay from "../../components/ModalOverlay/ModalOverlay";
+import { setRegUser } from "../../services/actions/auth";
 
 import styles from "./stylesForm.module.css";
 

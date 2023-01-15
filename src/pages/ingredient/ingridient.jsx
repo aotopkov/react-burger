@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-import IngredientDetails from "../components/IngredientDetails/IngredientDetails";
+import IngredientDetails from "../../components/IngredientDetails/IngredientDetails";
 
 export default function IngridientPage() {
   const data = useSelector((store) => store.data.data);

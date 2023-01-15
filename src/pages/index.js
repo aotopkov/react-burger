@@ -1,12 +1,12 @@
-import LoginPage from "./login"
-import RegistrationPage from "./registration"
-import ForgotPasswordPage from "./forgot-password"
-import ResetPasswordPage from "./reset-password"
-import ProfilePage from "./profile"
-import NotFoundPage from "./notFound"
-import IngridientPage from "./ingridient"
-import OrderFeedPage from "./orderFeed"
-import OrderInfoPage from "./orderInfo"
+import LoginPage from "./auth/login"
+import RegistrationPage from "./auth/registration"
+import ForgotPasswordPage from "./auth/forgot-password"
+import ResetPasswordPage from "./auth/reset-password"
+import ProfilePage from "./profile/profile"
+import NotFoundPage from "./404/notFound"
+import IngridientPage from "./ingredient/ingridient"
+import OrderFeedPage from "./orderFeed/orderFeed"
+import OrderInfoPage from "./orderInfo/orderInfo"
 
 export {
     LoginPage,

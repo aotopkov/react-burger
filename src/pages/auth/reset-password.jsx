@@ -6,7 +6,7 @@ import {
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { burgerApiUrl, passwordResetApi } from "../utils/Api";
+import { burgerApiUrl, passwordResetApi } from "../../utils/Api";
 import styles from "./stylesForm.module.css";
 
 export default function ResetPasswordPage() {

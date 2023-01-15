@@ -7,9 +7,9 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Route, Switch } from "react-router-dom";
-import OrdersList from "../components/OrdersList/OrdersList";
-import { changeUserData, logoutUser } from "../services/actions/auth";
-import { WS_CONNECTION_START_FOR_AUTH } from "../services/actions/socket";
+import OrdersList from "../../components/OrdersList/OrdersList";
+import { changeUserData, logoutUser } from "../../services/actions/auth";
+import { WS_CONNECTION_START_FOR_AUTH } from "../../services/actions/socket";
 import styles from "./profile.module.css";
 
 export default function ProfilePage() {
