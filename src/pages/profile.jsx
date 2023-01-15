@@ -6,20 +6,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  NavLink,
-  Redirect,
-  Route,
-  Switch,
-  useLocation,
-} from "react-router-dom";
+import { NavLink, Route, Switch } from "react-router-dom";
 import OrdersList from "../components/OrdersList/OrdersList";
 import { changeUserData, logoutUser } from "../services/actions/auth";
 import { WS_CONNECTION_START_FOR_AUTH } from "../services/actions/socket";
 import styles from "./profile.module.css";
 
 export default function ProfilePage() {
-  const location = useLocation();
   const dispatch = useDispatch();
   const activeLink = `${styles.activeLink} text text_type_main-medium`;
   const inactiveLink = `${styles.link} text text_type_main-medium text_color_inactive`;
@@ -34,15 +27,15 @@ export default function ProfilePage() {
 
   useEffect(() => {
     dispatch({ type: WS_CONNECTION_START_FOR_AUTH });
-  }, [dispatch]);
+  }, [dispatch, ordersData]);
 
   useEffect(() => {
     setUser({ ...user, name: userData.user.name, email: userData.user.email });
   }, [userData]);
 
-  function logout() {
+  const logout = () => {
     dispatch(logoutUser());
-  }
+  };
 
   function onChange(e) {
     setUser({ ...user, visible: true, [e.target.name]: e.target.value });
@@ -137,13 +130,9 @@ export default function ProfilePage() {
             </form>
           )}
         </Route>
-        <Route exact path="/profile/orders">
-          {ordersData.get ? (
-            <OrdersList ordersData={ordersData} forAuth={true} />
-          ) : (
-            <Redirect to={{ pathname: "/login", state: { from: location } }} />
-          )}
-        </Route>
+        {ordersData.get && (<Route path="/profile/orders">
+          <OrdersList ordersData={ordersData} />
+        </Route>)}
       </Switch>
     </div>
   );

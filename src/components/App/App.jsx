@@ -54,39 +54,45 @@ function App() {
     <div className={styles.App}>
       <AppHeader />
       <Switch location={background || location}>
-        <Route path="/login">
-          <ProtectedRoute forAuth={false} component={<LoginPage />} />
-        </Route>
-        <Route path="/registration">
-          <ProtectedRoute forAuth={false} component={<RegistrationPage />} />
-        </Route>
-        <Route path="/forgot-password">
-          <ProtectedRoute forAuth={false} component={<ForgotPasswordPage />} />
-        </Route>
-        <Route path="/reset-password">
-          <ProtectedRoute forAuth={false} component={<ResetPasswordPage />} />
-        </Route>
-
+        <ProtectedRoute
+          path="/login"
+          forAuth={false}
+          component={<LoginPage />}
+        />
+        <ProtectedRoute
+          path="/registration"
+          forAuth={false}
+          component={<RegistrationPage />}
+        />
+        <ProtectedRoute
+          path="/forgot-password"
+          forAuth={false}
+          component={<ForgotPasswordPage />}
+        />
+        <ProtectedRoute
+          path="/reset-password"
+          forAuth={false}
+          component={<ResetPasswordPage />}
+        />
         <Route exact path="/feed" component={OrderFeedPage} />
         {success && (
           <Route path="/ingridient/:id">
             <IngridientPage />
           </Route>
         )}
-
         <Route path="/feed/:id">
           <OrderInfoPage type="full" />
         </Route>
-        <Route path="/profile/orders/:id">
-          <ProtectedRoute
-            forAuth={true}
-            component={<OrderInfoPage type="full" forAuth={true} />}
-          />
-        </Route>
-        <Route path="/profile">
-          <ProtectedRoute forAuth={true} component={<ProfilePage />} />
-        </Route>
-
+        <ProtectedRoute
+          forAuth={true}
+          path="/profile/orders/:id"
+          component={<OrderInfoPage type="full" />}
+        />
+        <ProtectedRoute
+          path="/profile"
+          forAuth={true}
+          component={<ProfilePage />}
+        />
         <Route exact path="/">
           <main className={styles.main}>
             {dataRequest && (

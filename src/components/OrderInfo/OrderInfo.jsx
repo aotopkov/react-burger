@@ -2,15 +2,19 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { useSelector } from "react-redux";
 import styles from "./OrderInfo.module.css";
 import PropTypes from "prop-types";
+import { useLocation } from "react-router-dom";
 
-export default function OrderInfo({ type, forAuth, number }) {
+export default function OrderInfo({ type, number }) {
+  const path = useLocation().pathname;
   const dataStore = useSelector((store) => store.data.data);
   const orderData = useSelector((store) => store.orderInfo);
   const order = getOrder();
   const currentData = getCurrentData();
 
   function getOrder() {
-    return orderData.data.orders.find((elem) => elem.number == number);
+    if (orderData.get) {
+      return orderData.data.orders.find((elem) => elem.number == number);
+    }
   }
 
   function getCurrentData() {
@@ -26,16 +30,7 @@ export default function OrderInfo({ type, forAuth, number }) {
   }
 
   const reduceCurrentData = [...new Set(currentData)];
-
-  const elementOver = () => {
-    return reduceCurrentData.find((elem, index) => {
-      return index === 6;
-    });
-  };
-
-  if (reduceCurrentData >= 6) {
-    elementOver();
-  }
+  const elementOver = reduceCurrentData.at(6)
 
   const orderCost = currentData.reduce((acc, elem) => acc + elem.price, 0);
   const date = new Date(order.updatedAt) + "";
@@ -50,13 +45,13 @@ export default function OrderInfo({ type, forAuth, number }) {
           </p>
         </div>
         <p className="text text_type_main-medium mt-6">{order.name}</p>
-        {forAuth && order.status === "created" && (
+        {path.includes("profile") && order.status === "created" && (
           <p className="text text_type_main-default mt-2">Создан</p>
         )}
-        {forAuth && order.status === "pending" && (
+        {path.includes("profile") && order.status === "pending" && (
           <p className="text text_type_main-default mt-2">Выполняется</p>
         )}
-        {forAuth && order.status === "done" && (
+        {path.includes("profile") && order.status === "done" && (
           <p
             className={`${styles.status_done} text text_type_main-default mt-2`}
           >
@@ -76,8 +71,11 @@ export default function OrderInfo({ type, forAuth, number }) {
                 </li>
               );
             })}
-            {reduceCurrentData.length >= 6 && (
-              <li className={styles.image__container} key={elementOver()._id}>
+            {reduceCurrentData.length >= 6 && elementOver && (
+              <li
+                className={styles.image__container}
+                key={elementOver._id}
+              >
                 <div className={styles.count}>
                   <p className="text text_type_main-default">
                     {`+${reduceCurrentData.length}`}
@@ -85,8 +83,8 @@ export default function OrderInfo({ type, forAuth, number }) {
                 </div>
                 <img
                   className={styles.image_small}
-                  src={elementOver().image}
-                  alt={elementOver().name}
+                  src={elementOver.image}
+                  alt={elementOver.name}
                 ></img>
               </li>
             )}

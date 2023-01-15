@@ -3,7 +3,7 @@ import OrderInfo from "../OrderInfo/OrderInfo";
 import styles from "./OrderList.module.css";
 import PropTypes from "prop-types";
 
-export default function OrdersList({ ordersData, forAuth }) {
+export default function OrdersList({ ordersData }) {
   const location = useLocation();
   const url = location.pathname === "/feed" ? "/feed" : "/profile/orders";
 
@@ -21,8 +21,6 @@ export default function OrdersList({ ordersData, forAuth }) {
             >
               <OrderInfo
                 type="small"
-                order={elem}
-                forAuth={forAuth}
                 number={elem.number}
               />
             </Link>
@@ -34,6 +32,5 @@ export default function OrdersList({ ordersData, forAuth }) {
 }
 
 OrdersList.propTypes = {
-  forAuth: PropTypes.bool,
   ordersData: PropTypes.object.isRequired,
 };
