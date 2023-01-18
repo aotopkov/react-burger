@@ -1,0 +1,27 @@
+.orders__list {
+    max-height: 812px;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: auto;
+    padding-right: 8px;
+}
+
+.orders__list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.orders__list::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.orders__list::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
