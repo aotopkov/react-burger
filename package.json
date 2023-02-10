@@ -1,4 +1,5 @@
 {
+  "homepage": "https://aotopkov.github.io/react-burger",
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
@@ -35,8 +36,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "homepage": "./"
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
