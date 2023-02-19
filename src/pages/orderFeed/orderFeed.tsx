@@ -44,7 +44,7 @@ const OrderFeedPage: FC = () => {
               <p className="text text_type_main-default">Готовы:</p>
               <div className={styles.orders__statuslist_container}>
                 <ul className={styles.orders__statuslist}>
-                  {statusDone.slice(0, 10).map((elem: number) => {
+                  {statusDone.slice(0, 10).map((elem) => {
                     return (
                       <li key={uuidv4()}>
                         <p
@@ -57,7 +57,7 @@ const OrderFeedPage: FC = () => {
                   })}
                 </ul>
                 <ul className={styles.orders__statuslist}>
-                  {statusDone.slice(11, 21).map((elem: number) => {
+                  {statusDone.slice(11, 21).map((elem) => {
                     return (
                       <li key={uuidv4()}>
                         <p
@@ -75,7 +75,7 @@ const OrderFeedPage: FC = () => {
               <p className="text text_type_main-default">Выполняются:</p>
               <div className={styles.orders__statuslist_container}>
                 <ul className={styles.orders__statuslist}>
-                  {statusPending.slice(0, 10).map((elem: number) => {
+                  {statusPending.slice(0, 10).map((elem) => {
                     return (
                       <li key={uuidv4()}>
                         <p
@@ -88,7 +88,7 @@ const OrderFeedPage: FC = () => {
                   })}
                 </ul>
                 <ul className={styles.orders__statuslist}>
-                  {statusPending.slice(11, 21).map((elem: number) => {
+                  {statusPending.slice(11, 21).map((elem) => {
                     return (
                       <li key={uuidv4()}>
                         <p

@@ -1,4 +1,4 @@
-import { FC, RefObject, useRef } from "react";
+import { FC, useRef } from "react";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/drag-icon";
 
@@ -13,7 +13,7 @@ import { useDrop, useDrag } from "react-dnd";
 import { TIngridient } from "../../services/types/data";
 
 interface IBurgerConstructorIngridient {
-  elem: TIngridient & { uuid: string };
+  elem: TIngridient;
   index: number;
 }
 
@@ -89,7 +89,7 @@ const BurgerConstructorIngridient: FC<IBurgerConstructorIngridient> = ({
         price={elem.price}
         thumbnail={elem.image}
         handleClose={() => {
-          handleRemoveIngridient(elem.uuid);
+          return elem.uuid ? handleRemoveIngridient(elem.uuid) : undefined;
         }}
       />
     </li>

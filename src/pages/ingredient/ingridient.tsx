@@ -11,6 +11,6 @@ const IngridientPage: FC = () => {
   const currentData = data.find((elem: TIngridient) => elem._id === id);
 
   return <div>{currentData && <IngredientDetails data={currentData} />}</div>;
-}
+};
 
-export default IngridientPage
+export default IngridientPage;

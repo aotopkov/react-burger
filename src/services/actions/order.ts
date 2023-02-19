@@ -17,17 +17,17 @@ export const START_MOVE_INGRIDIENT: "START_MOVE_INGRIDIENT" =
 export const CLEAR_BIN_CONSTRUCTOR: "CLEAR_BIN_CONSTRUCTOR" =
   "CLEAR_BIN_CONSTRUCTOR";
 
-//Типизация
-
-
-export function addBunToConstructor(bun: TIngridient) {
+export function addBunToConstructor(bun: TIngridient | undefined) {
   return {
     type: ADD_BUN_TO_CONSTRUCTOR,
     payload: bun,
   };
 }
 
-export function addIngridientToConstructor(ingridient: TIngridient, uuid: string) {
+export function addIngridientToConstructor(
+  ingridient: TIngridient | undefined,
+  uuid: string
+) {
   return {
     type: ADD_INGRIDIENT_TO_CONSTRUCTOR,
     payload: ingridient,
@@ -35,7 +35,7 @@ export function addIngridientToConstructor(ingridient: TIngridient, uuid: string
   };
 }
 
-export const setOrder: AppThunk = (idArr) => {
+export const setOrder: AppThunk = (idArr: string[]) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: SET_ORDER_REQUEST,
@@ -43,6 +43,7 @@ export const setOrder: AppThunk = (idArr) => {
     getOrderDatafromApi(burgerApiUrl, idArr)
       .then((res) => {
         if (res && res.success) {
+          console.log(res);
           dispatch({
             type: SET_ORDER_SUCCESS,
             res: res,
@@ -58,4 +59,4 @@ export const setOrder: AppThunk = (idArr) => {
         console.log(`ошибка ${err}`);
       });
   };
-}
+};

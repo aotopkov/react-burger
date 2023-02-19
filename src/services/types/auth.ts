@@ -13,7 +13,7 @@ export interface ISetUserDataRequest {
 
 export interface ISetUserDataSuccess {
   readonly type: typeof SET_USER_DATA_SUCCESS;
-  readonly res: TUser
+  readonly res: TUser;
 }
 
 export interface ISetUserDataFailed {
@@ -22,7 +22,7 @@ export interface ISetUserDataFailed {
 
 export interface ISetUserDataLogout {
   readonly type: typeof SET_USER_DATA_LOGOUT;
-  readonly res: TUserLogout
+  readonly res: TUserLogout;
 }
 
 export interface ISetUserDataEmailToken {

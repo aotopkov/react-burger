@@ -4,13 +4,13 @@ export const burgerApiUrl = "https://norma.nomoreparties.space/api/";
 
 interface IRes {
   ok: boolean;
-  status: number
-  
+  status: number;
+  json(): any;
+  success?: boolean;
 }
 
 const checkResponse = (res: IRes) => {
   if (res.ok) {
-    console.log(res)
     return res.json();
   }
   return Promise.reject(`Ошибка: ${res.status}`);

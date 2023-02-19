@@ -32,22 +32,24 @@ const AppHeader: FC = () => {
               </Link>
             </li>
           )}
-          {path.includes('feed') && (<li className={styles.navItem}>
-            <NavLink to={{ pathname: "/feed" }} className={styles.link}>
-              <ListIcon type="primary" />
-              <p className="text text_type_main-default">
-                Лист заказов
-              </p>
-            </NavLink>
-          </li>)}
-          {!path.includes('feed') &&(<li className={styles.navItem}>
-            <NavLink to={{ pathname: "/feed" }} className={styles.link}>
-              <ListIcon type="secondary" />
-              <p className="text text_type_main-default text_color_inactive">
-                Лист заказов
-              </p>
-            </NavLink>
-          </li>)}
+          {path.includes("feed") && (
+            <li className={styles.navItem}>
+              <NavLink to={{ pathname: "/feed" }} className={styles.link}>
+                <ListIcon type="primary" />
+                <p className="text text_type_main-default">Лист заказов</p>
+              </NavLink>
+            </li>
+          )}
+          {!path.includes("feed") && (
+            <li className={styles.navItem}>
+              <NavLink to={{ pathname: "/feed" }} className={styles.link}>
+                <ListIcon type="secondary" />
+                <p className="text text_type_main-default text_color_inactive">
+                  Лист заказов
+                </p>
+              </NavLink>
+            </li>
+          )}
           <li className={styles.logo}>
             <Link to="/">
               <Logo />
@@ -75,6 +77,6 @@ const AppHeader: FC = () => {
       </nav>
     </header>
   );
-}
+};
 
 export default AppHeader;

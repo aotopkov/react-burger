@@ -36,15 +36,20 @@ const BurgerConstructor: FC = () => {
 
   const totalPrice = useMemo(() => {
     if (bun && ingridients) {
-      return (
-        bun.price * 2 + ingridients.reduce((acc: number, elem: TIngridient) => acc + elem.price, 0)
+      let cost = ingridients.reduce(
+        (acc: number, elem: TIngridient) => acc + elem.price,
+        0
       );
+      return bun.price * 2 + cost;
     } else if (bun) {
       return bun.price * 2;
     } else if (ingridients) {
-      return ingridients.reduce((acc: number, elem: TIngridient) => acc + elem.price, 0);
+      return ingridients.reduce(
+        (acc: number, elem: TIngridient) => acc + elem.price,
+        0
+      );
     } else {
-      return "0";
+      return 0;
     }
   }, [bun, ingridients]);
 
@@ -73,17 +78,17 @@ const BurgerConstructor: FC = () => {
 
   const [, targetRefBun] = useDrop({
     accept: "bun",
-    drop(item: {id: string}) {
-      dispatch(addBunToConstructor(data.find((elem: TIngridient) => elem._id === item.id)));
+    drop(item: { id: string }) {
+      dispatch(addBunToConstructor(data.find((elem) => elem._id === item.id)));
     },
   });
 
   const [, targetRefIngridient] = useDrop({
     accept: "ingridient",
-    drop(item: {id: string}) {
+    drop(item: { id: string }) {
       dispatch(
         addIngridientToConstructor(
-          data.find((elem: TIngridient) => elem._id === item.id),
+          data.find((elem) => elem._id === item.id),
           uuidv4()
         )
       );
@@ -124,7 +129,7 @@ const BurgerConstructor: FC = () => {
           </p>
         )}
         {ingridients &&
-          ingridients.map((elem: TIngridient & {uuid: string}, index: number) => {
+          ingridients.map((elem: TIngridient, index: number) => {
             return (
               <BurgerConstructorIngridient
                 elem={elem}
@@ -173,6 +178,6 @@ const BurgerConstructor: FC = () => {
       )}
     </section>
   );
-}
+};
 
 export default BurgerConstructor;

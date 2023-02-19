@@ -9,30 +9,30 @@ import {
 import { TOrderData } from "./data";
 
 export interface IWsConnectionStart {
-  readonly type: typeof WS_CONNECTION_START;
+  type: typeof WS_CONNECTION_START;
 }
 
 export interface IWsConnectionStartForAuth {
-  readonly type: typeof WS_CONNECTION_START_FOR_AUTH;
+  type: typeof WS_CONNECTION_START_FOR_AUTH;
 }
 
 export interface IWsConnectionSuccess {
-  readonly type: typeof WS_CONNECTION_SUCCESS;
+  type: typeof WS_CONNECTION_SUCCESS;
 }
 
 export interface IWsConnectionError {
-  readonly type: typeof WS_CONNECTION_ERROR;
-  readonly payload: string;
+  type: typeof WS_CONNECTION_ERROR;
+  payload: string;
 }
 
 export interface IWsConnectionClosed {
-  readonly type: typeof WS_CONNECTION_CLOSED;
+  type: typeof WS_CONNECTION_CLOSED;
 }
 
 export interface IWsConnectionGetMessage {
-  readonly type: typeof WS_CONNECTION_GET_MESSAGE;
-  readonly payload: {
-    orders: Array<TOrderData>;
+  type: typeof WS_CONNECTION_GET_MESSAGE;
+  payload: {
+    orders: TOrderData[];
     total: number;
     totalToday: number;
   };

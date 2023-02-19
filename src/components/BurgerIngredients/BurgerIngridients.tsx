@@ -40,7 +40,11 @@ const BurgerIngridients: FC = () => {
           </Tab>
         </li>
         <li>
-          <Tab value="sauce" active={!bunsVisible && sauceVisible} onClick={() => {}}>
+          <Tab
+            value="sauce"
+            active={!bunsVisible && sauceVisible}
+            onClick={() => {}}
+          >
             Соусы
           </Tab>
         </li>
@@ -109,6 +113,6 @@ const BurgerIngridients: FC = () => {
       </div>
     </section>
   );
-}
+};
 
-export default BurgerIngridients
+export default BurgerIngridients;

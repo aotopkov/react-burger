@@ -9,6 +9,7 @@ import {
   SET_ORDER_SUCCESS,
   START_MOVE_INGRIDIENT,
 } from "../actions/order";
+import { TIngridient } from "./data";
 
 export interface ISetOrderRequest {
   readonly type: typeof SET_ORDER_REQUEST;
@@ -16,7 +17,7 @@ export interface ISetOrderRequest {
 
 export interface ISetOrderSuccess {
   readonly type: typeof SET_ORDER_SUCCESS;
-  readonly res: any
+  readonly res: any;
 }
 
 export interface ISetOrderFailed {
@@ -29,24 +30,24 @@ export interface ICloseOrderModal {
 
 export interface IAddBunToConstructor {
   readonly type: typeof ADD_BUN_TO_CONSTRUCTOR;
-  readonly payload: any
+  readonly payload: TIngridient;
 }
 
 export interface IAddIngridientToConstructor {
   readonly type: typeof ADD_INGRIDIENT_TO_CONSTRUCTOR;
-  readonly payload: any;
-  readonly uuid: string
+  readonly payload: TIngridient;
+  readonly uuid: string;
 }
 
 export interface IRemoveIngridientFromConstructor {
   readonly type: typeof REMOVE_INGRIDIENT_FROM_CONSTRUCTOR;
-  readonly uuid: string
+  readonly uuid: string;
 }
 
 export interface IStartMoveIngridient {
   readonly type: typeof START_MOVE_INGRIDIENT;
   readonly drag: any;
-  readonly hover: any
+  readonly hover: any;
 }
 
 export interface IClearBinConstructor {

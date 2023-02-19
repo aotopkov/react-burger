@@ -10,5 +10,5 @@ export const rootReducer = combineReducers({
   order: submitOrderData,
   constructorBin: constructorBin,
   userData: userData,
-  orderInfo: wsOrderReducer
+  orderInfo: wsOrderReducer,
 });

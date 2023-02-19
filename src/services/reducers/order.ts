@@ -1,4 +1,3 @@
-import { combineReducers } from "redux";
 import update from "immutability-helper";
 
 import {
@@ -17,26 +16,20 @@ import { TIngridient } from "../types/data";
 
 export type TOrderSet = {
   openModal: Boolean;
-  name: string;
-  order: {
-    number: number | null;
-  };
+  number: number | null;
   success: Boolean;
   orderRequest: Boolean;
   orderFailed: Boolean;
 };
 
 type TConstructor = {
-  readonly bun: null | (TIngridient & { uuid: string });
-  readonly ingridients: ReadonlyArray<TIngridient & { uuid: string }>;
+  bun: null | TIngridient;
+  ingridients: TIngridient[];
 };
 
 const initOrderData: TOrderSet = {
   openModal: false,
-  name: "",
-  order: {
-    number: null,
-  },
+  number: null,
   success: false,
   orderRequest: false,
   orderFailed: false,
@@ -71,7 +64,7 @@ export const constructorBin = (
       return {
         ...state,
         ingridients: state.ingridients.filter(
-          (elem) => elem.uuid !== action.uuid
+          (elem: TIngridient) => elem.uuid !== action.uuid
         ),
       };
     }
@@ -105,7 +98,7 @@ export const submitOrderData = (
     case SET_ORDER_SUCCESS: {
       return {
         ...state,
-        order: { ...state.order, number: action.res.order.number },
+        number: action.res.order.number,
         success: action.res.success,
         orderRequest: false,
         openModal: true,
@@ -115,7 +108,7 @@ export const submitOrderData = (
       return { ...state, orderFailed: true, orderRequest: false };
     }
     case CLOSE_ORDER_MODAL: {
-      return { state: initOrderData };
+      return initOrderData;
     }
 
     default:

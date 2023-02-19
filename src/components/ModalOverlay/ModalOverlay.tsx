@@ -2,12 +2,11 @@ import { FC, ReactNode } from "react";
 import styles from "./ModalOverlay.module.css";
 
 export interface IModal {
-  close: () => void
-  children: ReactNode
+  close: () => void;
+  children: ReactNode;
 }
 
-
-export const ModalOverlay: FC<IModal> = ({close, children}) => {
+export const ModalOverlay: FC<IModal> = ({ close, children }) => {
   const closeModal = (e: any) => {
     if (e.target.id === "modalOverlay") {
       close();
@@ -23,6 +22,6 @@ export const ModalOverlay: FC<IModal> = ({close, children}) => {
       {children}
     </div>
   );
-}
+};
 
 export default ModalOverlay;

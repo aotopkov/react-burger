@@ -97,7 +97,7 @@ export const getUser: AppThunk = () => {
       })
       .catch((err) => {
         console.log(`ошибка ${err}`);
-        dispatch(refreshToken());
+        refreshToken();
       });
   };
 };
@@ -110,7 +110,7 @@ export const refreshToken: AppThunk = () => {
       .then((res) => {
         if (res && res.success) {
           receiveCookie(res);
-          dispatch(getUser());
+          getUser();
         } else {
           dispatch({
             type: SET_USER_DATA_FAILED,
@@ -147,12 +147,12 @@ export const changeUserData: AppThunk = (data) => {
       })
       .catch((err) => {
         console.log(`ошибка ${err}. Обновляем Токен`);
-        dispatch(refreshToken());
-        dispatch(changeUserData(data));
+        refreshToken();
+        changeUserData(data);
       })
 
       .finally(() => {
-        dispatch(getUser());
+        getUser();
       });
   };
 };

@@ -13,7 +13,7 @@ export interface IGetDataSuccess {
   readonly type: typeof GET_DATA_SUCCESS;
   readonly res: {
     readonly success: Boolean;
-    readonly data: ReadonlyArray<TIngridient>;
+    readonly data: TIngridient[];
   };
 }
 

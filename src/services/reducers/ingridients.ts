@@ -1,6 +1,3 @@
-import { combineReducers } from "redux";
-import update from "immutability-helper";
-
 import {
   GET_DATA_REQUEST,
   GET_DATA_SUCCESS,
@@ -10,10 +7,10 @@ import { TGetData } from "../types/ingridients";
 import { TIngridient } from "../types/data";
 
 type TIngridientData = {
-  readonly data: ReadonlyArray<TIngridient>;
-  readonly dataRequest: Boolean;
-  readonly dataFailed: Boolean;
-  readonly success: Boolean;
+  data: TIngridient[];
+  dataRequest: Boolean;
+  dataFailed: Boolean;
+  success: Boolean;
 };
 
 const initStateData: TIngridientData = {

@@ -32,7 +32,7 @@ const RegistrationPage: FC = () => {
   return (
     <div className={styles.container}>
       <form onSubmit={submitForm}>
-        {userData.userDataRequest && (
+        {userData.request && (
           <ModalOverlay close={() => {}}>
             <p className="text text_type_main-default">Отправляем данные</p>
           </ModalOverlay>

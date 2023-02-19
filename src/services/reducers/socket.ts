@@ -9,9 +9,11 @@ import { TWsConnection } from "../types/socket";
 
 export type TWsOrderInfo = {
   readonly connected: Boolean;
-  readonly orders: Array<TOrderData>;
+  readonly orders: TOrderData[];
   readonly error: undefined | string;
   readonly get: Boolean;
+  readonly total: number | null;
+  readonly totalToday: number | null;
 };
 
 const wsInitOrderInfo: TWsOrderInfo = {
@@ -19,6 +21,8 @@ const wsInitOrderInfo: TWsOrderInfo = {
   orders: [],
   error: undefined,
   get: false,
+  total: null,
+  totalToday: null,
 };
 
 export function wsOrderReducer(
@@ -50,7 +54,9 @@ export function wsOrderReducer(
       return {
         ...state,
         get: true,
-        orders: action.payload.orders
+        orders: action.payload.orders,
+        total: action.payload.total,
+        totalToday: action.payload.totalToday,
       };
     }
 

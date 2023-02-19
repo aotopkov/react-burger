@@ -25,10 +25,15 @@ import { getCookie } from "../../utils/cookie";
 import { getData } from "../../services/actions/ingridients";
 import { getUser } from "../../services/actions/auth";
 import { TWsOrderInfo } from "../../services/reducers/socket";
+import { Location, LocationState } from "history";
+
+type TUseLocation = LocationState & {
+  background?: Location;
+};
 
 const App: FC = () => {
   const isAuth = getCookie("accessToken");
-  const location = useLocation();
+  const location = useLocation<TUseLocation>();
   const background = location.state && location.state.background;
   const dispatch = useDispatch();
   const { data, dataRequest, dataFailed, success } = useSelector(

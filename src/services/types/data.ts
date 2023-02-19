@@ -1,7 +1,7 @@
 //тип для ингридиента
 
 export type TIngridient = {
-  _id: string;
+  readonly _id: string;
   readonly name: string;
   readonly type: string;
   readonly proteins: number;
@@ -13,6 +13,7 @@ export type TIngridient = {
   readonly image_large: string;
   readonly image: string;
   readonly __v: number;
+  readonly uuid?: string;
 };
 
 //тип для данных о пользователе
@@ -36,7 +37,7 @@ export type TUserLogout = Omit<TUser, "user">;
 
 export type TOrderData = {
   readonly _id: string;
-  readonly ingridients: ReadonlyArray<string>;
+  readonly ingredients: string[];
   readonly status: string;
   readonly name: string;
   readonly createdAt: string;

@@ -44,7 +44,6 @@ export const userData = (
         failed: false,
         isLoggin: action.res.success,
         user: action.res.user,
-        
       };
     }
     case SET_USER_DATA_FAILED: {

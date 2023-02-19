@@ -8,7 +8,7 @@ import { TIngridient, TOrderData } from "../../services/types/data";
 
 interface IOrderInfo {
   type: "full" | "small" | "modal";
-  number: number;
+  number: number | undefined;
 }
 
 const OrderInfo: FC<IOrderInfo> = ({ type, number }) => {
@@ -18,20 +18,24 @@ const OrderInfo: FC<IOrderInfo> = ({ type, number }) => {
   const order = getOrder();
   const currentData = getCurrentData();
 
-  function getOrder() {
+  function getOrder(): TOrderData | undefined {
     if (orderData.get) {
       return orderData.orders.find((elem: TOrderData) => elem.number == number);
+    } else {
+      return undefined;
     }
   }
 
   function getCurrentData() {
-    const currentData: Array<TIngridient> = [];
+    const currentData: TIngridient[] = [];
     dataStore.filter((dataElem: TIngridient) => {
-      order.ingredients.map((orderElem: string) => {
-        if (orderElem === dataElem._id) {
-          return currentData.push(dataElem);
-        }
-      });
+      if (order != undefined) {
+        order.ingredients.map((orderElem) => {
+          if (orderElem === dataElem._id) {
+            return currentData.push(dataElem);
+          }
+        });
+      }
     });
     return currentData;
   }
@@ -40,9 +44,9 @@ const OrderInfo: FC<IOrderInfo> = ({ type, number }) => {
   const elementOver = reduceCurrentData.at(6);
 
   const orderCost = currentData.reduce((acc, elem) => acc + elem.price, 0);
-  const date = new Date(order.updatedAt) + "";
+  const date = order ? new Date(order.updatedAt) + "" : "out off date";
 
-  if (type === "small") {
+  if (type === "small" && order != undefined) {
     return (
       <div className={styles.container_small}>
         <div className={styles.header}>
@@ -102,7 +106,7 @@ const OrderInfo: FC<IOrderInfo> = ({ type, number }) => {
     );
   }
 
-  if (type == "full" || "modal") {
+  if ((type == "full" || "modal") && order != undefined) {
     return (
       <div
         className={`${
@@ -169,6 +173,8 @@ const OrderInfo: FC<IOrderInfo> = ({ type, number }) => {
       </div>
     );
   }
+
+  return <></>;
 };
 
 export default OrderInfo;

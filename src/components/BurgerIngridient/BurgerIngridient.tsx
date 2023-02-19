@@ -10,14 +10,20 @@ import { FC } from "react";
 import { TIngridient } from "../../services/types/data";
 
 const BurgerIngridient: FC<{ data: TIngridient }> = ({ data }) => {
-  const count = useSelector((store) => {
-    if (data.type === "bun" && store.constructorBin.bun) {
-      return store.constructorBin.bun._id === data._id ? "1" : false;
+  const count: number | undefined = useSelector((store) => {
+    if (
+      data.type === "bun" &&
+      store.constructorBin.bun &&
+      store.constructorBin.bun._id === data._id
+    ) {
+      return 1;
     }
     if (data.type !== "bun" && store.constructorBin.ingridients) {
       return store.constructorBin.ingridients.filter(
         (elem: TIngridient) => elem._id === data._id
       ).length;
+    } else {
+      return 0;
     }
   });
 
