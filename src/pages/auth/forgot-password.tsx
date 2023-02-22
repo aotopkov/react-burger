@@ -17,7 +17,7 @@ const ForgotPasswordPage: FC = () => {
   const history = useHistory();
   const { values, changeInput, setValue } = useInput({ email: "" });
 
-  const SubmitForm = (e: SyntheticEvent) => {
+  const SubmitForm = (e: React.FormEvent) => {
     e.preventDefault();
     passwordForgotApi(burgerApiUrl, values)
       .then((res) => {

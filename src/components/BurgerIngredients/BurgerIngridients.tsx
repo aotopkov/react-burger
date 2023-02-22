@@ -59,7 +59,7 @@ const BurgerIngridients: FC = () => {
           Булки
         </p>
         <ul className={styles.listIngridients}>
-          {bun.map((elem: TIngridient) => {
+          {bun.map((elem) => {
             return (
               <Link
                 key={elem._id}
@@ -78,7 +78,7 @@ const BurgerIngridients: FC = () => {
           Соусы
         </p>
         <ul className={styles.listIngridients}>
-          {sauce.map((elem: TIngridient) => {
+          {sauce.map((elem) => {
             return (
               <Link
                 key={elem._id}
@@ -95,7 +95,7 @@ const BurgerIngridients: FC = () => {
         </ul>
         <p className="text text_type_main-medium mt-10">Начинки</p>
         <ul className={styles.listIngridients} ref={mainRef}>
-          {main.map((elem: TIngridient) => {
+          {main.map((elem) => {
             return (
               <Link
                 key={elem._id}

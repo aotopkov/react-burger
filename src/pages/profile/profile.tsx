@@ -10,8 +10,13 @@ import { useSelector, useDispatch } from "../../services/types/hooks";
 import { NavLink, Route, Switch } from "react-router-dom";
 import OrdersList from "../../components/OrdersList/OrdersList";
 import { changeUserData, logoutUser } from "../../services/actions/auth";
-import { WS_CONNECTION_START_FOR_AUTH } from "../../services/actions/socket";
+import {
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_START_FOR_AUTH,
+} from "../../services/actions/socket";
 import styles from "./profile.module.css";
+import { accessToken } from "../../utils/cookie";
+import { wsUrlOrder } from "../../services/store";
 
 const ProfilePage: FC = () => {
   const dispatch = useDispatch();
@@ -27,7 +32,14 @@ const ProfilePage: FC = () => {
   });
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START_FOR_AUTH });
+    dispatch({
+      type: WS_CONNECTION_START_FOR_AUTH,
+      url: wsUrlOrder,
+      token: accessToken,
+    });
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    };
   }, [dispatch]);
 
   useEffect(() => {

@@ -17,7 +17,12 @@ export interface ISetOrderRequest {
 
 export interface ISetOrderSuccess {
   readonly type: typeof SET_ORDER_SUCCESS;
-  readonly res: any;
+  readonly res: {
+    order: {
+      number: number;
+    };
+    success: boolean;
+  };
 }
 
 export interface ISetOrderFailed {

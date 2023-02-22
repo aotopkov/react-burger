@@ -43,7 +43,6 @@ export const setOrder: AppThunk = (idArr: string[]) => {
     getOrderDatafromApi(burgerApiUrl, idArr)
       .then((res) => {
         if (res && res.success) {
-          console.log(res);
           dispatch({
             type: SET_ORDER_SUCCESS,
             res: res,

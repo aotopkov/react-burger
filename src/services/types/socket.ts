@@ -10,10 +10,13 @@ import { TOrderData } from "./data";
 
 export interface IWsConnectionStart {
   type: typeof WS_CONNECTION_START;
+  url: string;
 }
 
 export interface IWsConnectionStartForAuth {
   type: typeof WS_CONNECTION_START_FOR_AUTH;
+  url: string;
+  token: string;
 }
 
 export interface IWsConnectionSuccess {

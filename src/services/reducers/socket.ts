@@ -44,11 +44,7 @@ export function wsOrderReducer(
       };
     }
     case WS_CONNECTION_CLOSED: {
-      return {
-        ...state,
-        connected: false,
-        get: false,
-      };
+      return wsInitOrderInfo;
     }
     case WS_CONNECTION_GET_MESSAGE: {
       return {

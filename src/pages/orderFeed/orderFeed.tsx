@@ -2,17 +2,23 @@ import { FC, useEffect } from "react";
 import { useSelector, useDispatch } from "../../services/types/hooks";
 
 import OrdersList from "../../components/OrdersList/OrdersList";
-import { WS_CONNECTION_START } from "../../services/actions/socket";
+import {
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_START,
+} from "../../services/actions/socket";
 import styles from "./orderFeed.module.css";
-import { v4 as uuidv4 } from "uuid";
 import { TOrderData } from "../../services/types/data";
+import { wsUrlOrder } from "../../services/store";
 
 const OrderFeedPage: FC = () => {
   const dispatch = useDispatch();
   const ordersData = useSelector((store) => store.orderInfo);
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
+    dispatch({ type: WS_CONNECTION_START, url: `${wsUrlOrder}/all` });
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    };
   }, [dispatch]);
 
   const statusDone = ordersData.get
@@ -44,9 +50,9 @@ const OrderFeedPage: FC = () => {
               <p className="text text_type_main-default">Готовы:</p>
               <div className={styles.orders__statuslist_container}>
                 <ul className={styles.orders__statuslist}>
-                  {statusDone.slice(0, 10).map((elem) => {
+                  {statusDone.slice(0, 10).map((elem, index) => {
                     return (
-                      <li key={uuidv4()}>
+                      <li key={index}>
                         <p
                           className={`${styles.status_done} text text_type_digits-default`}
                         >
@@ -57,9 +63,9 @@ const OrderFeedPage: FC = () => {
                   })}
                 </ul>
                 <ul className={styles.orders__statuslist}>
-                  {statusDone.slice(11, 21).map((elem) => {
+                  {statusDone.slice(11, 21).map((elem, index) => {
                     return (
-                      <li key={uuidv4()}>
+                      <li key={index}>
                         <p
                           className={`${styles.status_done} text text_type_digits-default`}
                         >
@@ -75,9 +81,9 @@ const OrderFeedPage: FC = () => {
               <p className="text text_type_main-default">Выполняются:</p>
               <div className={styles.orders__statuslist_container}>
                 <ul className={styles.orders__statuslist}>
-                  {statusPending.slice(0, 10).map((elem) => {
+                  {statusPending.slice(0, 10).map((elem, index) => {
                     return (
-                      <li key={uuidv4()}>
+                      <li key={index}>
                         <p
                           className={`${styles.status_done} text text_type_digits-default`}
                         >
@@ -88,9 +94,9 @@ const OrderFeedPage: FC = () => {
                   })}
                 </ul>
                 <ul className={styles.orders__statuslist}>
-                  {statusPending.slice(11, 21).map((elem) => {
+                  {statusPending.slice(11, 21).map((elem, index) => {
                     return (
-                      <li key={uuidv4()}>
+                      <li key={index}>
                         <p
                           className={`${styles.status_done} text text_type_digits-default`}
                         >

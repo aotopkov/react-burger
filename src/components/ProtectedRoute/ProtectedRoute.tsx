@@ -1,9 +1,9 @@
 import { FC, ReactNode, useEffect } from "react";
 import { useSelector } from "../../services/types/hooks";
-
 import { Redirect, Route, useLocation } from "react-router";
 import { getUser } from "../../services/actions/auth";
 import { getCookie } from "../../utils/cookie";
+import { TUseLocation } from "../App/App";
 
 interface IProtectedRoute {
   forAuth: Boolean;
@@ -19,7 +19,7 @@ const ProtectedRoute: FC<IProtectedRoute> = ({
 }) => {
   const isAuth = getCookie("accessToken");
   const userData = useSelector((store) => store.userData);
-  const location: any = useLocation();
+  const location = useLocation<TUseLocation>();
 
   useEffect(() => {
     getUser();

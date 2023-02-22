@@ -7,7 +7,7 @@ export interface IModal {
 }
 
 export const ModalOverlay: FC<IModal> = ({ close, children }) => {
-  const closeModal = (e: any) => {
+  const closeModal = (e: React.BaseSyntheticEvent) => {
     if (e.target.id === "modalOverlay") {
       close();
     }

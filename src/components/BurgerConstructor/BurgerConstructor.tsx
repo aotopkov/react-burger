@@ -58,13 +58,13 @@ const BurgerConstructor: FC = () => {
     if (bun && ingridients) {
       burgerId = burgerId.concat(bun._id);
       burgerId = burgerId.concat(
-        ingridients.map((elem: TIngridient) => {
+        ingridients.map((elem) => {
           return elem._id;
         })
       );
     } else if (ingridients) {
       burgerId = burgerId.concat(
-        ingridients.map((elem: TIngridient) => {
+        ingridients.map((elem) => {
           return elem._id;
         })
       );
@@ -129,7 +129,7 @@ const BurgerConstructor: FC = () => {
           </p>
         )}
         {ingridients &&
-          ingridients.map((elem: TIngridient, index: number) => {
+          ingridients.map((elem, index: number) => {
             return (
               <BurgerConstructorIngridient
                 elem={elem}

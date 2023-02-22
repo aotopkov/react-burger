@@ -2,14 +2,7 @@ import { getCookie } from "./cookie";
 
 export const burgerApiUrl = "https://norma.nomoreparties.space/api/";
 
-interface IRes {
-  ok: boolean;
-  status: number;
-  json(): any;
-  success?: boolean;
-}
-
-const checkResponse = (res: IRes) => {
+const checkResponse = (res: Response) => {
   if (res.ok) {
     return res.json();
   }

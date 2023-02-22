@@ -7,33 +7,35 @@ import {
   WS_CONNECTION_START,
   WS_CONNECTION_START_FOR_AUTH,
 } from "../../services/actions/socket";
-import { getCookie } from "../../utils/cookie";
+import { accessToken } from "../../utils/cookie";
 import styles from "./orderInfo.module.css";
+import { wsUrlOrder } from "../../services/store";
 
 interface IOrderInfoPage {
   type: "small" | "full" | "modal";
 }
 
-interface IUseParams {
-  id: string;
-}
-
 const OrderInfoPage: FC<IOrderInfoPage> = ({ type }) => {
-  const isAuth = getCookie("accessToken");
   const dispatch = useDispatch();
   const path = useLocation().pathname;
-  const params = useParams<IUseParams>();
+  const { id }: { id: string } = useParams();
   const ordersData = useSelector((store) => store.orderInfo);
 
   useEffect(() => {
-    path.includes("profile") && isAuth
-      ? dispatch({ type: WS_CONNECTION_START_FOR_AUTH })
-      : dispatch({ type: WS_CONNECTION_START });
-  }, []);
+    if (!ordersData.get) {
+      path.includes("profile") && accessToken
+        ? dispatch({
+            type: WS_CONNECTION_START_FOR_AUTH,
+            url: wsUrlOrder,
+            token: accessToken,
+          })
+        : dispatch({ type: WS_CONNECTION_START, url: `${wsUrlOrder}/all` });
+    }
+  }, [dispatch]);
 
   return (
     <div className={type === "full" ? styles.container : ""}>
-      {ordersData.get && <OrderInfo type={type} number={parseInt(params.id)} />}
+      {ordersData.get && <OrderInfo type={type} number={parseInt(id)} />}
     </div>
   );
 };

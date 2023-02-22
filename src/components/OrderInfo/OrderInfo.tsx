@@ -20,7 +20,7 @@ const OrderInfo: FC<IOrderInfo> = ({ type, number }) => {
 
   function getOrder(): TOrderData | undefined {
     if (orderData.get) {
-      return orderData.orders.find((elem: TOrderData) => elem.number == number);
+      return orderData.orders.find((elem) => elem.number == number);
     } else {
       return undefined;
     }

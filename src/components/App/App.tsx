@@ -25,10 +25,11 @@ import { getCookie } from "../../utils/cookie";
 import { getData } from "../../services/actions/ingridients";
 import { getUser } from "../../services/actions/auth";
 import { TWsOrderInfo } from "../../services/reducers/socket";
-import { Location, LocationState } from "history";
+import { Location } from "history";
 
-type TUseLocation = LocationState & {
+export type TUseLocation = {
   background?: Location;
+  from: Location;
 };
 
 const App: FC = () => {
@@ -43,14 +44,11 @@ const App: FC = () => {
   const ordersData: TWsOrderInfo = useSelector((store) => store.orderInfo);
 
   useEffect(() => {
-    dispatch(getData());
-  }, [dispatch]);
-
-  useEffect(() => {
     if (isAuth) {
       dispatch(getUser());
     }
-  }, [dispatch, isAuth]);
+    dispatch(getData());
+  }, [isAuth]);
 
   function closeModal() {
     history.goBack();

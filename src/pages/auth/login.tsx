@@ -21,7 +21,7 @@ const LoginPage: FC = () => {
   });
   const userData = useSelector((store) => store.userData);
 
-  const submitForm = (e: SyntheticEvent) => {
+  const submitForm = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(loginUser(values));
     setValue({ email: "", password: "" });

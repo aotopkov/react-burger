@@ -173,7 +173,6 @@ export const logoutUser: AppThunk = () => {
             type: SET_USER_DATA_LOGOUT,
             res: res,
           });
-          console.log(res);
         }
       })
       .catch((err) => {
