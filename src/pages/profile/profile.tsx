@@ -20,9 +20,9 @@ import {
   WS_CONNECTION_START,
 } from "../../services/actions/socket";
 import styles from "./profile.module.css";
-import { accessToken } from "../../utils/cookie";
 import { wsUrlOrder } from "../../services/store";
 import ModalOverlay from "../../components/ModalOverlay/ModalOverlay";
+import { getCookie } from "../../utils/cookie";
 
 const ProfilePage: FC = () => {
   const dispatch = useDispatch();
@@ -39,16 +39,16 @@ const ProfilePage: FC = () => {
 
   useEffect(() => {
     dispatch(getUser());
-    if (accessToken) {
+    if (userData.isLoggin) {
       dispatch({
         type: WS_CONNECTION_START,
-        url: `${wsUrlOrder}?token=${accessToken}`,
+        url: `${wsUrlOrder}?token=${getCookie("accessToken")}`,
       });
     }
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
     };
-  }, [dispatch, accessToken]);
+  }, []);
 
   useEffect(() => {
     setUser({ ...user, name: userData.user.name, email: userData.user.email });
@@ -154,7 +154,9 @@ const ProfilePage: FC = () => {
           {ordersData.start && (
             <ModalOverlay close={() => {}}>Открываем соединение</ModalOverlay>
           )}
-          {ordersData.get && <OrdersList ordersData={ordersData} />}
+          {ordersData.get && userData.isLoggin && (
+            <OrdersList ordersData={ordersData} />
+          )}
         </Route>
       </Switch>
     </div>

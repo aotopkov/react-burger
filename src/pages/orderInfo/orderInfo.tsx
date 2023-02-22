@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from "../../services/types/hooks";
 import { useLocation, useParams } from "react-router-dom";
 import OrderInfo from "../../components/OrderInfo/OrderInfo";
 import { WS_CONNECTION_START } from "../../services/actions/socket";
-import { accessToken } from "../../utils/cookie";
 import styles from "./orderInfo.module.css";
 import { wsUrlOrder } from "../../services/store";
+import { getCookie } from "../../utils/cookie";
 
 interface IOrderInfoPage {
   type: "small" | "full" | "modal";
@@ -20,10 +20,10 @@ const OrderInfoPage: FC<IOrderInfoPage> = ({ type }) => {
 
   useEffect(() => {
     if (!ordersData.get) {
-      path.includes("profile") && accessToken
+      path.includes("profile")
         ? dispatch({
             type: WS_CONNECTION_START,
-            url: `${wsUrlOrder}?token=${accessToken}`,
+            url: `${wsUrlOrder}?token=${getCookie("accessToken")}`,
           })
         : dispatch({ type: WS_CONNECTION_START, url: `${wsUrlOrder}/all` });
     }

@@ -2,8 +2,6 @@
 
 import { TUserLogin } from "../services/types/data";
 
-export const accessToken = getCookie("accessToken");
-
 export function receiveCookie(res: TUserLogin) {
   let accessToken = res.accessToken.split("Bearer ")[1];
   let refreshToken = res.refreshToken;

@@ -97,7 +97,7 @@ export const getUser: AppThunk = () => {
       })
       .catch((err) => {
         console.log(`ошибка ${err}`);
-        refreshToken();
+        return refreshToken();
       });
   };
 };

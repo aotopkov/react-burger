@@ -14,7 +14,6 @@ interface IProtectedRoute {
 const ProtectedRoute: FC<IProtectedRoute> = ({
   forAuth,
   component,
-  path,
   ...rest
 }) => {
   const isAuth = getCookie("accessToken");
