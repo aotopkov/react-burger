@@ -3,20 +3,13 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_GET_MESSAGE,
   WS_CONNECTION_START,
-  WS_CONNECTION_START_FOR_AUTH,
   WS_CONNECTION_SUCCESS,
 } from "../actions/socket";
 import { TOrderData } from "./data";
 
 export interface IWsConnectionStart {
   type: typeof WS_CONNECTION_START;
-  url: string;
-}
-
-export interface IWsConnectionStartForAuth {
-  type: typeof WS_CONNECTION_START_FOR_AUTH;
-  url: string;
-  token: string;
+  url: string
 }
 
 export interface IWsConnectionSuccess {
@@ -43,7 +36,6 @@ export interface IWsConnectionGetMessage {
 
 export type TWsConnection =
   | IWsConnectionStart
-  | IWsConnectionStartForAuth
   | IWsConnectionSuccess
   | IWsConnectionError
   | IWsConnectionClosed

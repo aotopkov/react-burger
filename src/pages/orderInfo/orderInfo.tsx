@@ -3,10 +3,7 @@ import { useSelector, useDispatch } from "../../services/types/hooks";
 
 import { useLocation, useParams } from "react-router-dom";
 import OrderInfo from "../../components/OrderInfo/OrderInfo";
-import {
-  WS_CONNECTION_START,
-  WS_CONNECTION_START_FOR_AUTH,
-} from "../../services/actions/socket";
+import { WS_CONNECTION_START } from "../../services/actions/socket";
 import { accessToken } from "../../utils/cookie";
 import styles from "./orderInfo.module.css";
 import { wsUrlOrder } from "../../services/store";
@@ -25,9 +22,8 @@ const OrderInfoPage: FC<IOrderInfoPage> = ({ type }) => {
     if (!ordersData.get) {
       path.includes("profile") && accessToken
         ? dispatch({
-            type: WS_CONNECTION_START_FOR_AUTH,
-            url: wsUrlOrder,
-            token: accessToken,
+            type: WS_CONNECTION_START,
+            url: `${wsUrlOrder}?token=${accessToken}`,
           })
         : dispatch({ type: WS_CONNECTION_START, url: `${wsUrlOrder}/all` });
     }

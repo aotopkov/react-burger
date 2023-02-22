@@ -2,7 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 import OrderInfo from "../OrderInfo/OrderInfo";
 import styles from "./OrderList.module.css";
 import { FC } from "react";
-import { TOrderData } from "../../services/types/data";
 import { TWsOrderInfo } from "../../services/reducers/socket";
 
 interface IOrderList {
@@ -15,7 +14,7 @@ const OrdersList: FC<IOrderList> = ({ ordersData }) => {
 
   return (
     <ul className={styles.orders__list}>
-      {ordersData.orders.map((elem: TOrderData) => {
+      {ordersData.orders.map((elem) => {
         return (
           <li key={elem.number}>
             <Link

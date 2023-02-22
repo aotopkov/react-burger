@@ -9,6 +9,7 @@ import {
 import styles from "./orderFeed.module.css";
 import { TOrderData } from "../../services/types/data";
 import { wsUrlOrder } from "../../services/store";
+import ModalOverlay from "../../components/ModalOverlay/ModalOverlay";
 
 const OrderFeedPage: FC = () => {
   const dispatch = useDispatch();
@@ -39,6 +40,9 @@ const OrderFeedPage: FC = () => {
 
   return (
     <>
+      {ordersData.start && (
+        <ModalOverlay close={() => {}}>Открываем соединение</ModalOverlay>
+      )}
       {ordersData.get && (
         <section className={styles.container}>
           <p className="text text_type_main-large">Лента заказов</p>

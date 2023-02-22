@@ -9,14 +9,20 @@ import { useSelector, useDispatch } from "../../services/types/hooks";
 
 import { NavLink, Route, Switch } from "react-router-dom";
 import OrdersList from "../../components/OrdersList/OrdersList";
-import { changeUserData, logoutUser } from "../../services/actions/auth";
+import {
+  changeUserData,
+  getUser,
+  logoutUser,
+  refreshToken,
+} from "../../services/actions/auth";
 import {
   WS_CONNECTION_CLOSED,
-  WS_CONNECTION_START_FOR_AUTH,
+  WS_CONNECTION_START,
 } from "../../services/actions/socket";
 import styles from "./profile.module.css";
 import { accessToken } from "../../utils/cookie";
 import { wsUrlOrder } from "../../services/store";
+import ModalOverlay from "../../components/ModalOverlay/ModalOverlay";
 
 const ProfilePage: FC = () => {
   const dispatch = useDispatch();
@@ -32,15 +38,17 @@ const ProfilePage: FC = () => {
   });
 
   useEffect(() => {
-    dispatch({
-      type: WS_CONNECTION_START_FOR_AUTH,
-      url: wsUrlOrder,
-      token: accessToken,
-    });
+    dispatch(getUser());
+    if (accessToken) {
+      dispatch({
+        type: WS_CONNECTION_START,
+        url: `${wsUrlOrder}?token=${accessToken}`,
+      });
+    }
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
     };
-  }, [dispatch]);
+  }, [dispatch, accessToken]);
 
   useEffect(() => {
     setUser({ ...user, name: userData.user.name, email: userData.user.email });
@@ -142,11 +150,12 @@ const ProfilePage: FC = () => {
             </form>
           )}
         </Route>
-        {ordersData.get && (
-          <Route path="/profile/orders">
-            <OrdersList ordersData={ordersData} />
-          </Route>
-        )}
+        <Route path="/profile/orders">
+          {ordersData.start && (
+            <ModalOverlay close={() => {}}>Открываем соединение</ModalOverlay>
+          )}
+          {ordersData.get && <OrdersList ordersData={ordersData} />}
+        </Route>
       </Switch>
     </div>
   );
