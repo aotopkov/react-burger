@@ -13,7 +13,6 @@ import {
   changeUserData,
   getUser,
   logoutUser,
-  refreshToken,
 } from "../../services/actions/auth";
 import {
   WS_CONNECTION_CLOSED,
